@@ -1,5 +1,9 @@
 import Foundation
 
+public protocol NetworkExecutor {
+    func execute<T: Decodable>(request: any Request) async throws -> T
+}
+
 public enum NetworkExecutorFactory {
     public static func make() -> NetworkExecutor {
         let baseUrl = URL(string: "http://<your-domain>.com")!
@@ -8,7 +12,7 @@ public enum NetworkExecutorFactory {
         return NetworkExecutorImplementation(
             baseUrl: baseUrl,
             client: client,
-            tokenProvider: .shared
+            tokenStore: .shared
         )
     }
 }

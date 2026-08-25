@@ -1,5 +1,5 @@
 import Foundation
 
-public protocol TokenRefresherProtocol: Sendable {
+public protocol TokenRefreshDelegate: Sendable {
     func refresh() async throws -> String
 }

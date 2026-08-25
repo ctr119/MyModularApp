@@ -7,6 +7,7 @@ public enum NetworkError: Error, LocalizedError {
     case httpError(statusCode: Int, data: Data?)
     case networkError(Error)
     case maxNumberOfRetriesReached
+    case missingTokenRefreshDelegate
 
     public var errorDescription: String? {
         switch self {
@@ -22,6 +23,8 @@ public enum NetworkError: Error, LocalizedError {
             "Network error: \(error.localizedDescription)"
         case .maxNumberOfRetriesReached:
             "Max retries reached"
+        case .missingTokenRefreshDelegate:
+            "There is no `TokenRefreshDelegate` assigned"
         }
     }
 }

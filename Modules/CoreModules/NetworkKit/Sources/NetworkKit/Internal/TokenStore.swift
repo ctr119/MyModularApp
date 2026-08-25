@@ -1,22 +1,14 @@
 import Foundation
 
-public actor TokenProvider {
-    public static let shared = TokenProvider()
+actor TokenStore {
+    static let shared = TokenStore()
 
     private var accessToken: String?
 
-    private var refresher: TokenRefresherProtocol?
+    private var refreshDelegate: TokenRefreshDelegate?
     private var refreshTask: Task<String, Error>?
-    
-    private init() {}
-    
-    public func configure(refresher: TokenRefresherProtocol) {
-        self.refresher = refresher
-    }
 
-    func setAccessToken(_ token: String?) {
-        self.accessToken = token
-    }
+    private init() {}
 
     func getAccessToken() async throws -> String? {
         if let refreshTask {
@@ -31,12 +23,12 @@ public actor TokenProvider {
             return
         }
 
-        guard let refresher = refresher else {
-            throw NSError(domain: "Session", code: 401)
+        guard let refreshDelegate else {
+            throw NetworkError.missingTokenRefreshDelegate
         }
 
         let task = Task<String, Error> {
-            return try await refresher.refresh()
+            return try await refreshDelegate.refresh()
         }
         self.refreshTask = task
         defer { refreshTask = nil }
@@ -48,5 +40,19 @@ public actor TokenProvider {
             self.accessToken = nil
             throw error
         }
+    }
+}
+
+extension TokenStore: NetworkTokenStore {
+    public func setAccessToken(_ token: String) async throws {
+        if let refreshTask {
+            _ = try await refreshTask.value
+            return
+        }
+        self.accessToken = token
+    }
+
+    func setRefreshDelegate(_ delegate: any TokenRefreshDelegate) async {
+        self.refreshDelegate = delegate
     }
 }
