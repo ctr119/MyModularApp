@@ -9,13 +9,15 @@ let package = Package(
         .library(name: "AuthFeature", targets: ["AuthFeature"]),
     ],
     dependencies: [
-        .package(path: "../../CoreModules/NetworkKit")
+        .package(path: "../../CoreModules/NetworkKit"),
+        .package(path: "../../CoreModules/PersistanceKit"),
     ],
     targets: [
         .target(
             name: "AuthFeature",
             dependencies: [
-                .product(name: "NetworkKit", package: "NetworkKit")
+                .product(name: "NetworkKit", package: "NetworkKit"),
+                .product(name: "PersistanceKit", package: "PersistanceKit")
             ],
             path: "Sources/AuthFeature"
         ),

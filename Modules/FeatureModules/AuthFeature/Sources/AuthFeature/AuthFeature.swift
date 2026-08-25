@@ -1,25 +1,42 @@
 import Foundation
 import NetworkKit
+import PersistanceKit
 
 public final class AuthTokenRefresher: TokenRefresherProtocol {
-    public init() {}
+    private let accessTokenKey = "mmaat" // To the repo
+    private let keychain: Keychain
+
+    public init(keychain: Keychain = KeychainSingleton.shared) {
+        self.keychain = keychain
+    }
 
     public func refresh() async throws -> String {
         try await Task.sleep(nanoseconds: 500_000_000)
         let token = "refreshed_\(UUID().uuidString)"
-
-        UserDefaults.standard.set(token, forKey: "access_token")
+        try await keychain.store(token, withKey: accessTokenKey)
         return token
     }
 }
 
 public final class LoginUseCase {
-    public init() {}
+    private let accessTokenKey = "mmaat" // To the repo
+    private let keychain: Keychain
+    // TODO: Rename to NetworkTokenStore
+    private let tokenProvider: TokenProvider
+
+    public init(
+        keychain: Keychain = KeychainSingleton.shared,
+        tokenProvider: TokenProvider = .shared
+    ) {
+        self.keychain = keychain
+        self.tokenProvider = tokenProvider
+    }
 
     public func execute() async throws {
         try await Task.sleep(nanoseconds: 500_000_000)
         let token = "new_login_token"
-        UserDefaults.standard.set(token, forKey: "access_token")
-//        await TokenProvider.shared.updateAccessToken(token)
+
+        try await keychain.store(token, withKey: accessTokenKey)
+        try await tokenProvider.setAccessToken(token)
     }
 }
