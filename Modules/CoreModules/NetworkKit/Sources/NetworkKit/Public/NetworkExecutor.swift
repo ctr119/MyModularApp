@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol NetworkExecutor {
+public protocol NetworkExecutor: Sendable {
     func execute<T: Decodable>(request: any Request) async throws -> T
 }
 

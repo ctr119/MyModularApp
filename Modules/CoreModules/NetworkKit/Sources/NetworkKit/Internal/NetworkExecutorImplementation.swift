@@ -1,6 +1,6 @@
 import Foundation
 
-class NetworkExecutorImplementation: NetworkExecutor {
+final class NetworkExecutorImplementation: NetworkExecutor {
     private let MAX_ATTEMPTS = 1
 
     private let baseUrl: URL

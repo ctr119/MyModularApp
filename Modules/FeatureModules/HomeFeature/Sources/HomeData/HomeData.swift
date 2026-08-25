@@ -3,10 +3,10 @@ import HomeDomain
 import NetworkKit
 
 public final class HomeRepository: GetHomeFeedUseCaseProtocol {
-    private let client: NetworkClient
+    private let networkExecutor: NetworkExecutor
 
-    public init(client: NetworkClient) {
-        self.client = client
+    public init(networkExecutor: NetworkExecutor) {
+        self.networkExecutor = networkExecutor
     }
 
     public func execute() async throws -> [FeedItem] {

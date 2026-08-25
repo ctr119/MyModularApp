@@ -7,8 +7,8 @@ import SwiftUI
 @MainActor
 public enum HomeViewBuilder {
     public static func build() -> some View {
-        let client = NetworkFactory.makeDefaultClient()
-        let repo = HomeRepository(client: client)
+        let networkExecutor = NetworkExecutorFactory.make()
+        let repo = HomeRepository(networkExecutor: networkExecutor)
 
         return HomeView(getHomeFeedUseCase: repo)
     }
