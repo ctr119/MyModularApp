@@ -2,7 +2,7 @@ import Foundation
 import NetworkKit
 import PersistanceKit
 
-public final class AuthTokenRefresher: TokenRefresherProtocol {
+public final class AuthTokenRefresher: TokenRefreshDelegate {
     private let accessTokenKey = "mmaat" // To the repo
     private let keychain: Keychain
 
@@ -21,15 +21,14 @@ public final class AuthTokenRefresher: TokenRefresherProtocol {
 public final class LoginUseCase {
     private let accessTokenKey = "mmaat" // To the repo
     private let keychain: Keychain
-    // TODO: Rename to NetworkTokenStore
-    private let tokenProvider: TokenProvider
+    private let tokenStore: NetworkTokenStore
 
     public init(
         keychain: Keychain = KeychainSingleton.shared,
-        tokenProvider: TokenProvider = .shared
+        tokenStore: NetworkTokenStore = NetworkTokenStoreFactory.make()
     ) {
         self.keychain = keychain
-        self.tokenProvider = tokenProvider
+        self.tokenStore = tokenStore
     }
 
     public func execute() async throws {
@@ -37,6 +36,6 @@ public final class LoginUseCase {
         let token = "new_login_token"
 
         try await keychain.store(token, withKey: accessTokenKey)
-        try await tokenProvider.setAccessToken(token)
+        try await tokenStore.setAccessToken(token)
     }
 }

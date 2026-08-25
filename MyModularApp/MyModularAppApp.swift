@@ -12,8 +12,8 @@ struct MyModularAppApp: App {
             ContentView()
                 .task(id: setupTaskId) {
                     // TODO: Move this to AppDelegate / SceneDelegate
-                    await TokenProvider.shared
-                        .configure(refresher: refresher)
+                    await NetworkTokenStoreFactory.make()
+                        .setRefreshDelegate(refresher)
                 }
         }
     }
