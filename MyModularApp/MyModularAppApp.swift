@@ -1,4 +1,5 @@
 import AuthFeature
+import HomeFeature
 import NetworkKit
 import SwiftUI
 
@@ -9,7 +10,7 @@ struct MyModularAppApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeViewBuilder.build()
                 .task(id: setupTaskId) {
                     // TODO: Move this to AppDelegate / SceneDelegate
                     await NetworkTokenStoreFactory.make()

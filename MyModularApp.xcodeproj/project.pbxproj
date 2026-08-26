@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3EC394BB303E4E4E00D7C3B1 /* HomeFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 3EC394BA303E4E4E00D7C3B1 /* HomeFeature */; };
 		3EF3F6B2303B08D400799FA7 /* AuthFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 3EF3F6B1303B08D400799FA7 /* AuthFeature */; };
 		3EF3F6B4303B08D400799FA7 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3EF3F6B3303B08D400799FA7 /* NetworkKit */; };
 		3EF3F6B7303B0BF600799FA7 /* HomeFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 3EF3F6B6303B0BF600799FA7 /* HomeFeature */; };
@@ -53,6 +54,7 @@
 			files = (
 				3EF3F6B4303B08D400799FA7 /* NetworkKit in Frameworks */,
 				3EF3F6B2303B08D400799FA7 /* AuthFeature in Frameworks */,
+				3EC394BB303E4E4E00D7C3B1 /* HomeFeature in Frameworks */,
 				3EF3F6B7303B0BF600799FA7 /* HomeFeature in Frameworks */,
 				3EF3F84D303B974500799FA7 /* PersistanceKit in Frameworks */,
 			);
@@ -111,6 +113,7 @@
 				3EF3F6B3303B08D400799FA7 /* NetworkKit */,
 				3EF3F6B6303B0BF600799FA7 /* HomeFeature */,
 				3EF3F84C303B974500799FA7 /* PersistanceKit */,
+				3EC394BA303E4E4E00D7C3B1 /* HomeFeature */,
 			);
 			productName = MyModularApp;
 			productReference = 3EF3F694303B02FF00799FA7 /* MyModularApp.app */;
@@ -140,6 +143,9 @@
 			);
 			mainGroup = 3EF3F68B303B02FF00799FA7;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				3EC394B9303E4E4E00D7C3B1 /* XCLocalSwiftPackageReference "Modules/FeatureModules/HomeFeature" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3EF3F695303B02FF00799FA7 /* Products */;
 			projectDirPath = "";
@@ -379,7 +385,18 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		3EC394B9303E4E4E00D7C3B1 /* XCLocalSwiftPackageReference "Modules/FeatureModules/HomeFeature" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Modules/FeatureModules/HomeFeature;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		3EC394BA303E4E4E00D7C3B1 /* HomeFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HomeFeature;
+		};
 		3EF3F6B1303B08D400799FA7 /* AuthFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AuthFeature;

@@ -6,7 +6,7 @@ let package = Package(
     name: "HomeFeature",
     platforms: [.iOS(.v26)],
     products: [
-        .library(name: "HomeFeature", targets: ["HomeBuilder"]),
+        .library(name: "HomeFeature", targets: ["HomeFeature"]),
     ],
     dependencies: [
         .package(path: "../../CoreModules/NetworkKit")
@@ -21,17 +21,17 @@ let package = Package(
             ]
         ),
         .target(
-            name: "HomeUI",
+            name: "HomePresentation",
             dependencies: [
                 "HomeDomain"
             ]
         ),
         .target(
-            name: "HomeBuilder",
+            name: "HomeFeature",
             dependencies: [
                 "HomeDomain",
                 "HomeData",
-                "HomeUI"
+                "HomePresentation"
             ]
         )
     ],
