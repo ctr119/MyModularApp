@@ -3,34 +3,48 @@ import Foundation
 final class NetworkExecutorImplementation: NetworkExecutor {
     private let MAX_ATTEMPTS = 1
 
-    private let baseUrl: URL
     private let client: NetworkClient
     private let tokenStore: TokenStore
+    private let configuration: NetworkConfiguration
 
-    init(baseUrl: URL, client: NetworkClient, tokenStore: TokenStore) {
-        self.baseUrl = baseUrl
+    init(client: NetworkClient, tokenStore: TokenStore, configuration: NetworkConfiguration) {
         self.client = client
         self.tokenStore = tokenStore
+        self.configuration = configuration
     }
 
     func execute<T: Decodable>(request: any Request) async throws -> T {
         var attempts = 0
 
         while true {
-            let token = try await tokenStore.getAccessToken()
-            let urlRequest = try request.urlRequest(with: baseUrl, authorisation: token)
+            let token: String? = if configuration.isAuthenticationEnabled {
+                try await tokenStore.getAccessToken()
+            } else { nil }
+
+            let urlRequest = try request.urlRequest(
+                with: configuration.baseUrl,
+                authorisation: token,
+                sharedHeaders: configuration.sharedHeaders
+            )
 
             do {
                 return try await client.perform(urlRequest: urlRequest)
 
-            } catch NetworkError.httpError(let statusCode, _) {
-                if statusCode == 401, attempts < MAX_ATTEMPTS {
-                    try await tokenStore.refreshToken()
-                    attempts += 1
-                    continue
+            } catch NetworkError.httpError(let statusCode, let data) {
+                if configuration.isAuthenticationEnabled, statusCode == 401 {
+                    if attempts < MAX_ATTEMPTS {
+                        try await tokenStore.refreshToken()
+                        attempts += 1
+                        continue
+                    } else {
+                        throw NetworkError.maxNumberOfRetriesReached
+                    }
                 }
 
-                throw NetworkError.maxNumberOfRetriesReached
+                throw NetworkError.httpError(
+                    statusCode: statusCode,
+                    data: data
+                )
             }
         }
     }

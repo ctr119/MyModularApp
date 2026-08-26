@@ -3,10 +3,16 @@ import Foundation
 extension Request {
     var timeoutInterval: TimeInterval { 30.0 }
 
-    func urlRequest(with baseUrl: URL, authorisation token: String? = nil) throws -> URLRequest {
-        let fullUrl = baseUrl.appending(component: path)
-
-        guard var urlComponents = URLComponents(url: fullUrl, resolvingAgainstBaseURL: true) else {
+    func urlRequest(
+        with baseUrl: URL?,
+        authorisation token: String? = nil,
+        sharedHeaders: [String: String]? = nil
+    ) throws -> URLRequest {
+        guard let baseUrl,
+              var urlComponents = URLComponents(
+                url: baseUrl.appending(component: path),
+                resolvingAgainstBaseURL: true
+              ) else {
             throw NetworkError.invalidURL
         }
 
@@ -24,7 +30,14 @@ extension Request {
         urlRequest.httpMethod = method.rawValue
         urlRequest.timeoutInterval = timeoutInterval
 
-        headers?.forEach { key, value in
+        var requestHeaders = headers
+        if let sharedHeaders {
+            requestHeaders?.merge(sharedHeaders, uniquingKeysWith: { currentValue, _ in
+                currentValue
+            })
+        }
+
+        requestHeaders?.forEach { key, value in
             urlRequest.addValue(value, forHTTPHeaderField: key)
         }
 
