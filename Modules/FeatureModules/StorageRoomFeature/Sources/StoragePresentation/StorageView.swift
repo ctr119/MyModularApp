@@ -5,30 +5,74 @@ struct StorageView: View {
     let room: StorageRoom
 
     var body: some View {
+        ScrollView {
+            VStack(spacing: 30) {
+                map
+
+                VStack(alignment: .leading, spacing: 6) {
+                    Section {
+                        ForEach(room.modules, id: \.id) { module in
+                            Text(module.description)
+                                .monospaced()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(12)
+                                .padding(.horizontal, 6)
+                                .background(.black.opacity(0.1))
+                                .clipShape(Capsule())
+                        }
+                    } header: {
+                        Text("Modules")
+                            .monospaced()
+                            .padding(.bottom, 6)
+                    }
+                }
+            }
+            .padding()
+        }
+    }
+
+    private var map: some View {
         StorageMapLayout(room: room) {
             ForEach(room.modules) { module in
                 ModuleView(module: module)
             }
         }
         .background {
-            StorageGridBackground(rows: room.gridRows, cols: room.gridCols)
+            StorageGridBackground(
+                rows: room.gridRows,
+                cols: room.gridCols,
+                backgroundColor: .white,
+                cornerRadius: 8
+            )
         }
-        .background {
-            Color.green
-        }
-        .padding()
     }
 }
 
 struct StorageGridBackground: View {
     let rows: Int
     let cols: Int
+    let backgroundColor: Color
+    let cornerRadius: CGFloat
 
     var body: some View {
         GeometryReader { proxy in
             let cellPointSize = proxy.size.width / CGFloat(cols)
 
             Canvas { context, size in
+                context.stroke(
+                    Path {
+                        $0.addRoundedRect(
+                            in: .init(
+                                x: 0, y: 0,
+                                width: size.width, height: size.height
+                            ),
+                            cornerSize: .init(width: cornerRadius, height: cornerRadius)
+                        )
+                    },
+                    with: .color(.gray),
+                    lineWidth: 4
+                )
+
                 for row in 0...rows {
                     let y = CGFloat(row) * cellPointSize
                     context.stroke(
@@ -51,6 +95,9 @@ struct StorageGridBackground: View {
                     )
                 }
             }
+            .background(backgroundColor)
+            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+            .shadow(color: .gray, radius: 4, x: 0, y: 4)
         }
     }
 }
@@ -59,11 +106,11 @@ struct ModuleView: View {
     let module: Module
 
     var body: some View {
-        Rectangle()
+        RoundedRectangle(cornerRadius: 8)
             .fill(.blue)
-            .border(.black)
             .overlay {
-                Text(module.description)
+                Text(module.label)
+                    .font(.caption)
             }
     }
 }
