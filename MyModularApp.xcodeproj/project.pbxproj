@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E4C238F3041D34B009E7559 /* SearchFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 3E4C238E3041D34B009E7559 /* SearchFeature */; };
 		3E4C260C30425A7C009E7559 /* DataSourceBase in Frameworks */ = {isa = PBXBuildFile; productRef = 3E4C260B30425A7C009E7559 /* DataSourceBase */; };
 		3E5669B5303F571300F64F8A /* StorageRoomFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 3E5669B4303F571300F64F8A /* StorageRoomFeature */; };
 		3EC394BB303E4E4E00D7C3B1 /* HomeFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 3EC394BA303E4E4E00D7C3B1 /* HomeFeature */; };
@@ -29,6 +30,7 @@
 				CoreModules/PersistanceKit,
 				FeatureModules/AuthFeature,
 				FeatureModules/HomeFeature,
+				FeatureModules/SearchFeature,
 				FeatureModules/StorageRoomFeature,
 			);
 			target = 3EF3F693303B02FF00799FA7 /* MyModularApp */;
@@ -56,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E4C238F3041D34B009E7559 /* SearchFeature in Frameworks */,
 				3EF3F6B4303B08D400799FA7 /* NetworkKit in Frameworks */,
 				3EF3F6B2303B08D400799FA7 /* AuthFeature in Frameworks */,
 				3EC394BB303E4E4E00D7C3B1 /* HomeFeature in Frameworks */,
@@ -121,6 +124,7 @@
 				3EF3F84C303B974500799FA7 /* PersistanceKit */,
 				3EC394BA303E4E4E00D7C3B1 /* HomeFeature */,
 				3E5669B4303F571300F64F8A /* StorageRoomFeature */,
+				3E4C238E3041D34B009E7559 /* SearchFeature */,
 				3E4C260B30425A7C009E7559 /* DataSourceBase */,
 			);
 			productName = MyModularApp;
@@ -401,6 +405,10 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3E4C238E3041D34B009E7559 /* SearchFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SearchFeature;
+		};
 		3E4C260B30425A7C009E7559 /* DataSourceBase */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DataSourceBase;
