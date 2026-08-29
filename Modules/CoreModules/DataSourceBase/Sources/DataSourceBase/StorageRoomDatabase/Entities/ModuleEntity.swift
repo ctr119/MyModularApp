@@ -3,22 +3,22 @@ import SwiftData
 
 extension StorageRoomSchemaV1 {
     @Model
-    public class ModuleEntity {
-        public var id: UUID
-        public var label: String
-        public var realWidthAmount: Decimal
-        public var realWidthUnit: Int
-        public var realDepthAmount: Decimal
-        public var realDepthUnit: Int
-        public var positionX: Double
-        public var positionY: Double
+    class ModuleEntity {
+        var id: UUID
+        var label: String
+        var realWidthAmount: Decimal
+        var realWidthUnit: Int
+        var realDepthAmount: Decimal
+        var realDepthUnit: Int
+        var positionX: Double
+        var positionY: Double
 
         @Relationship(inverse: \StoredItemEntity.moduleEntity)
-        public var items: [StoredItemEntity]
+        var items: [StoredItemEntity]
 
-        public var storageRoom: StorageRoomEntity?
+        var storageRoom: StorageRoomEntity?
 
-        public init(
+        init(
             id: UUID,
             label: String,
             realWidthAmount: Decimal,

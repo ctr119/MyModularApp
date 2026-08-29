@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E4C260C30425A7C009E7559 /* DataSourceBase in Frameworks */ = {isa = PBXBuildFile; productRef = 3E4C260B30425A7C009E7559 /* DataSourceBase */; };
 		3E5669B5303F571300F64F8A /* StorageRoomFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 3E5669B4303F571300F64F8A /* StorageRoomFeature */; };
 		3EC394BB303E4E4E00D7C3B1 /* HomeFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 3EC394BA303E4E4E00D7C3B1 /* HomeFeature */; };
 		3EF3F6B2303B08D400799FA7 /* AuthFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 3EF3F6B1303B08D400799FA7 /* AuthFeature */; };
@@ -23,6 +24,7 @@
 		3EF3F6AE303B04DF00799FA7 /* Exceptions for "Modules" folder in "MyModularApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				CoreModules/DataSourceBase,
 				CoreModules/NetworkKit,
 				CoreModules/PersistanceKit,
 				FeatureModules/AuthFeature,
@@ -57,6 +59,7 @@
 				3EF3F6B4303B08D400799FA7 /* NetworkKit in Frameworks */,
 				3EF3F6B2303B08D400799FA7 /* AuthFeature in Frameworks */,
 				3EC394BB303E4E4E00D7C3B1 /* HomeFeature in Frameworks */,
+				3E4C260C30425A7C009E7559 /* DataSourceBase in Frameworks */,
 				3EF3F6B7303B0BF600799FA7 /* HomeFeature in Frameworks */,
 				3E5669B5303F571300F64F8A /* StorageRoomFeature in Frameworks */,
 				3EF3F84D303B974500799FA7 /* PersistanceKit in Frameworks */,
@@ -118,6 +121,7 @@
 				3EF3F84C303B974500799FA7 /* PersistanceKit */,
 				3EC394BA303E4E4E00D7C3B1 /* HomeFeature */,
 				3E5669B4303F571300F64F8A /* StorageRoomFeature */,
+				3E4C260B30425A7C009E7559 /* DataSourceBase */,
 			);
 			productName = MyModularApp;
 			productReference = 3EF3F694303B02FF00799FA7 /* MyModularApp.app */;
@@ -397,6 +401,10 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3E4C260B30425A7C009E7559 /* DataSourceBase */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DataSourceBase;
+		};
 		3E5669B4303F571300F64F8A /* StorageRoomFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = StorageRoomFeature;
