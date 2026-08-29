@@ -44,7 +44,7 @@ public extension StorageRoom {
             id: UUID(),
             name: "Storage Room 112",
             cellSize: .init(amount: 1, unit: .m),
-            gridRows: 4,
+            gridRows: 6,
             gridCols: 4,
             modules: [
                 .init(

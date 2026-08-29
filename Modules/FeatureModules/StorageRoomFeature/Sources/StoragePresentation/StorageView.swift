@@ -12,13 +12,18 @@ struct StorageView: View {
                 VStack(alignment: .leading, spacing: 6) {
                     Section {
                         ForEach(room.modules, id: \.id) { module in
-                            Text(module.description)
-                                .monospaced()
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(12)
-                                .padding(.horizontal, 6)
-                                .background(.black.opacity(0.1))
-                                .clipShape(Capsule())
+                            Button {
+
+                            } label: {
+                                Text(module.description)
+                                    .monospaced()
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(12)
+                                    .padding(.horizontal, 6)
+                                    .background(.black.opacity(0.1))
+                                    .clipShape(Capsule())
+                            }
+                            .buttonStyle(.plain)
                         }
                     } header: {
                         Text("Modules")
