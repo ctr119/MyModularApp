@@ -7,6 +7,8 @@ let package = Package(
     platforms: [.iOS(.v26)],
     products: [
         .library(name: "SearchFeature", targets: ["SearchFeature"]),
+        // For Previews to work
+        .library(name: "SearchPresentation", type: .dynamic, targets: ["SearchPresentation"]),
     ],
     dependencies: [
         .package(path: "../../CoreModules/DataSourceBase")

@@ -1,7 +1,7 @@
 import SwiftUI
 
 public enum SearchNavigationEvent: Hashable {
-    case resultTapped(id: Int)
+    case resultTapped(id: UUID)
 }
 
 @Observable

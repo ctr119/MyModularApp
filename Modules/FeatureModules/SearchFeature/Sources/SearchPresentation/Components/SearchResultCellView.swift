@@ -1,9 +1,12 @@
+import SearchDomain
 import SwiftUI
 
 struct SearchResultCellView: View {
+    let searchItem: SearchItem
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Spoons")
+            Text(searchItem.name)
                 .font(.title2)
 
             pathView()
@@ -15,7 +18,7 @@ struct SearchResultCellView: View {
     private func pathView() -> some View {
         HStack(spacing: 10) {
             pathElement(
-                title: "Storage 1",
+                title: searchItem.room.name,
                 iconName: "square.split.bottomrightquarter.fill",
                 iconColor: .teal
             )
@@ -24,7 +27,7 @@ struct SearchResultCellView: View {
                 .foregroundStyle(.black.opacity(0.7))
 
             pathElement(
-                title: "Box 1: Kitchen",
+                title: searchItem.module.name,
                 iconName: "shippingbox.fill",
                 iconColor: .brown
             )
@@ -46,5 +49,5 @@ struct SearchResultCellView: View {
 }
 
 #Preview {
-    SearchResultCellView()
+    SearchResultCellView(searchItem: .mock)
 }

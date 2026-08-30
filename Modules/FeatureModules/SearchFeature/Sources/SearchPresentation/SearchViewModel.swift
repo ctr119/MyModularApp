@@ -13,7 +13,7 @@ public class SearchViewModel {
         self.searchItemsUseCase = container.searchItemsUseCase
     }
 
-    func search(_ term: String) async {
+    func search(term: String) async {
         let results = await searchItemsUseCase(term)
         searchResult = results
     }
