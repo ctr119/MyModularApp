@@ -9,6 +9,11 @@ public struct Measure: CustomStringConvertible, Sendable {
         "\(amount) \(unit)"
     }
 
+    public init(amount: Decimal, unit: Unit) {
+        self.amount = amount
+        self.unit = unit
+    }
+
     public func convert(to newUnit: Unit) -> Measure {
         let diff = unit.decimalScaleDifference(to: newUnit)
         let factor = pow(10, abs(diff))
