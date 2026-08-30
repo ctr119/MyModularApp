@@ -11,14 +11,7 @@ struct MyModularAppApp: App {
     private let refresher = AuthTokenRefresher()
 
     private var storageRoomModelContainer: ModelContainer = {
-        let schema = StorageRoomDatabase.getSchema()
-        let configuration = ModelConfiguration(schema: schema)
-        do {
-            return try ModelContainer(for: schema, configurations: configuration)
-        } catch {
-            let errorMessage = "SwiftData couldn't load StorageRoomDatabase. Error: \(error.localizedDescription)"
-            fatalError(errorMessage)
-        }
+        StorageRoomDatabase.getContainer()
     }()
 
     var body: some Scene {
