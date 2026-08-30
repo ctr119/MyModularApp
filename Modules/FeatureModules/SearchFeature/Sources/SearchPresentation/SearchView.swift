@@ -1,16 +1,22 @@
+import SearchDomain
 import SwiftUI
 
 public struct SearchView<Content: View>: View {
     @Binding var searchText: String
+    @State private var viewModel: SearchViewModel
     @State private var router: SearchRouter<Content>
 
     public init(
         searchText: Binding<String>,
+        dependencies: SearchDependencies,
         @ViewBuilder navigationEventHandler: @escaping (SearchNavigationEvent) -> Content
     ) {
         self._searchText = searchText
+        self._viewModel = State(
+            wrappedValue: SearchViewModel(container: dependencies)
+        )
         self._router = State(
-            initialValue: SearchRouter(
+            wrappedValue: SearchRouter(
                 navigationEventHandler: navigationEventHandler
             )
         )
@@ -37,6 +43,9 @@ public struct SearchView<Content: View>: View {
 #Preview {
     SearchView(
         searchText: .constant("Text something"),
+        dependencies: .init(
+            searchItemsUseCase: SearchItemsUseCasePreviewMock()
+        ),
         navigationEventHandler: { event in
             Text("Mock")
         }
