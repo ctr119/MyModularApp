@@ -10,9 +10,11 @@ import SwiftUI
 public enum SearchFeatureFactory<Content: View> {
     public static func make(
         searchText: Binding<String>,
-        container: ModelContainer,
+        container: ModelContainer?,
         @ViewBuilder navigationEventHandler: @escaping (SearchNavigationEvent) -> Content
     ) -> SearchView<Content> {
+        guard let container else { fatalError("No container was found") }
+
         let storageRoomDataSource = StorageRoomDataSourceFactory.make(container)
         let searchItemsUseCase = SearchRepositoryImpl(
             storageRoomDataSource: storageRoomDataSource
