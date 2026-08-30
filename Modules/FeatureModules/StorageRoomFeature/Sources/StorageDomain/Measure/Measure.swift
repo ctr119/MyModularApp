@@ -62,4 +62,20 @@ public extension Measure {
             unit: lhsCopy.unit
         )
     }
+
+    static func *(_ lhs: Measure, _ rhs: Measure) -> Measure {
+        var lhsCopy = lhs
+        var rhsCopy = rhs
+
+        if lhsCopy.unit < rhsCopy.unit {
+            rhsCopy = rhsCopy.convert(to: lhsCopy.unit)
+        } else if lhsCopy.unit > rhsCopy.unit {
+            lhsCopy = lhsCopy.convert(to: rhsCopy.unit)
+        }
+
+        return Measure(
+            amount: lhsCopy.amount * rhsCopy.amount,
+            unit: lhsCopy.unit
+        )
+    }
 }
