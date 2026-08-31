@@ -3,6 +3,7 @@ import SwiftUI
 
 struct ModulesCarouselView: View {
     let modules: [Module]
+    let didTapSeeAll: () -> Void
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -17,7 +18,7 @@ struct ModulesCarouselView: View {
                 Spacer()
 
                 Button {
-
+                    didTapSeeAll()
                 } label: {
                     HStack {
                         Text("See all")
@@ -51,5 +52,8 @@ struct ModulesCarouselView: View {
 }
 
 #Preview {
-    ModulesCarouselView(modules: StorageRoom.mock.modules)
+    ModulesCarouselView(
+        modules: StorageRoom.mock.modules,
+        didTapSeeAll: {}
+    )
 }
