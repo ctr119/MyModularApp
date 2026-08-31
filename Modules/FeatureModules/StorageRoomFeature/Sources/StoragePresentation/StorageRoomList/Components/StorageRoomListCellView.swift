@@ -16,6 +16,12 @@ struct StorageRoomListCellView: View {
             }
 
             modulesSneakPeak
+
+            if room.modules.count > modulesToDisplayLimit {
+                Text("+^[\(room.modules.count - modulesToDisplayLimit) more package](inflect: true)")
+                    .font(.caption2.italic().monospaced())
+            }
+
             capacityBar
         }
         .padding()
@@ -37,12 +43,6 @@ struct StorageRoomListCellView: View {
         VStack(alignment: .leading) {
             ForEach(room.modules.prefix(modulesToDisplayLimit), id: \.id) { module in
                 modulesCell(module)
-            }
-
-            if room.modules.count > modulesToDisplayLimit {
-                Text("+^[\(room.modules.count - modulesToDisplayLimit) more package](inflect: true)")
-                    .font(.caption2.italic().monospaced())
-                    .padding(.top, 1)
             }
         }
         .font(.callout.monospaced())
