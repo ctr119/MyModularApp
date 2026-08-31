@@ -2,7 +2,13 @@ import StorageDomain
 import SwiftUI
 
 struct StorageRoomListView: View {
-    let room: StorageRoom
+    @State private var viewModel: StorageRoomListViewModel
+
+    init(dependencies: StorageRoomListDependencies) {
+        self._viewModel = State(
+            wrappedValue: StorageRoomListViewModel(dependencies: dependencies)
+        )
+    }
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -10,17 +16,23 @@ struct StorageRoomListView: View {
                 columns: [.init(spacing: 15), .init()],
                 spacing: 15,
                 content: {
-                    StorageRoomListCellView(room: room)
-                    StorageRoomListCellView(room: room)
-                    StorageRoomListCellView(room: room)
-                    StorageRoomListCellView(room: room)
+                    ForEach(viewModel.rooms) { room in
+                        StorageRoomListCellView(room: room)
+                    }
                 }
             )
             .padding()
+        }
+        .task {
+            await viewModel.loadRooms()
         }
     }
 }
 
 #Preview {
-    StorageRoomListView(room: .mock)
+    StorageRoomListView(
+        dependencies: .init(
+            getStorageRoomsUseCase: GetStorageRoomsUseCaseMock()
+        )
+    )
 }

@@ -12,10 +12,14 @@ let package = Package(
         .library(name: "StorageDomain", type: .dynamic, targets: ["StorageDomain"]),
         .library(name: "StoragePresentation", type: .dynamic, targets: ["StoragePresentation"]),
     ],
+    dependencies: [
+        .package(path: "../../CoreModules/DataSourceBase")
+    ],
     targets: [
         .target(name: "StorageDomain"),
         .target(name: "StorageData", dependencies: [
-            "StorageDomain"
+            "StorageDomain",
+            .product(name: "DataSourceBase", package: "DataSourceBase")
         ]),
         .target(name: "StoragePresentation", dependencies: [
             "StorageDomain"
