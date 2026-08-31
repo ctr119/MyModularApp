@@ -5,8 +5,7 @@ struct StatsView: View {
     let room: StorageRoom
 
     var body: some View {
-        // TODO: Make it Flex
-        HStack(spacing: 20) {
+        FlowLayout {
             Label {
                 Text(room.cellSize.description.replacingOccurrences(of: " ", with: ""))
             } icon: {
