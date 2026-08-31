@@ -20,6 +20,6 @@ class StorageRoomListViewModel {
     }
 
     func didTapRoom(_ room: StorageRoom) {
-        router.navigate(to: .roomDetails(room: room))
+        router.navigate(to: .roomDetails(room: room, targetModule: nil))
     }
 }
