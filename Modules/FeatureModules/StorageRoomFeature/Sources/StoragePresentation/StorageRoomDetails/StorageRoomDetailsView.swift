@@ -1,7 +1,7 @@
 import StorageDomain
 import SwiftUI
 
-struct StorageView: View {
+struct StorageRoomDetailsView: View {
     let room: StorageRoom
 
     var body: some View {
@@ -121,5 +121,5 @@ struct ModuleView: View {
 }
 
 #Preview {
-    StorageView(room: .mock)
+    StorageRoomDetailsView(room: .mock)
 }

@@ -17,7 +17,7 @@ class StorageRoomListRouter {
     func view(for destination: Destination) -> some View {
         switch destination {
         case .roomDetails(let room):
-            StorageView(room: room)
+            StorageRoomDetailsView(room: room)
         }
     }
 }
