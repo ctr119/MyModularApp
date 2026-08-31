@@ -26,7 +26,10 @@ struct StorageRoomDetailsView: View {
     private var map: some View {
         StorageMapLayout(room: room) {
             ForEach(room.modules) { module in
-                MapModuleView(module: module)
+                MapModuleView(
+                    module: module,
+                    isTargeted: module == targetModule
+                )
             }
         }
         .background {

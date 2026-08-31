@@ -3,6 +3,7 @@ import SwiftUI
 
 struct MapModuleView: View {
     let module: Module
+    let isTargeted: Bool
 
     var body: some View {
         RoundedRectangle(cornerRadius: 8)
@@ -10,6 +11,14 @@ struct MapModuleView: View {
             .overlay {
                 Text(module.label)
                     .font(.caption)
+            }
+            .overlay {
+                // TODO: Change the stroke by a pulsed red dot animation
+                if isTargeted {
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(.red, lineWidth: 2)
+                        .transition(.opacity)
+                }
             }
     }
 }
@@ -23,6 +32,7 @@ struct MapModuleView: View {
             realDepth: .init(amount: 30, unit: .cm),
             position: .init(x: 0, y: 0),
             items: []
-        )
+        ),
+        isTargeted: true
     )
 }
