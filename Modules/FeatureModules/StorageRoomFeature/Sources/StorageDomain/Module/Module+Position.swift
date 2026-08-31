@@ -1,7 +1,7 @@
 import Foundation
 
 extension Module {
-    public struct Position: Sendable {
+    public struct Position: Hashable, Sendable {
         public let x: Double
         public let y: Double
 

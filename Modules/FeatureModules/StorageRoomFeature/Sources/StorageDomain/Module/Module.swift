@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Module: Identifiable, CustomStringConvertible, Sendable {
+public struct Module: Hashable, Identifiable, CustomStringConvertible, Sendable {
     public let id: UUID
     public let label: String
     public let realWidth: Measure

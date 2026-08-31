@@ -1,7 +1,7 @@
 import Foundation
 import Playgrounds
 
-public struct Measure: CustomStringConvertible, Sendable {
+public struct Measure: Hashable, CustomStringConvertible, Sendable {
     public let amount: Decimal
     public let unit: Unit
 

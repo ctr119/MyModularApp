@@ -1,6 +1,6 @@
 import Foundation
 
-public struct StorageRoom: Identifiable, Sendable {
+public struct StorageRoom: Hashable, Identifiable, Sendable {
     public let id: UUID
     public let name: String
     public let cellSize: Measure
@@ -38,4 +38,8 @@ public struct StorageRoom: Identifiable, Sendable {
     }
 }
 
-
+extension StorageRoom: Equatable {
+    public static func == (lhs: StorageRoom, rhs: StorageRoom) -> Bool {
+        lhs.id == rhs.id
+    }
+}

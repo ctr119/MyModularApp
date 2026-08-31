@@ -1,6 +1,6 @@
 import Foundation
 
-public struct StoredItem: Identifiable, Sendable {
+public struct StoredItem: Hashable, Identifiable, Sendable {
     public let id: UUID
     public let name: String
     public let tags: [String]
