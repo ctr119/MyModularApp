@@ -16,7 +16,12 @@ public extension StorageRoom {
                     realWidth: .init(amount: 50, unit: .cm),
                     realDepth: .init(amount: 30, unit: .cm),
                     position: .init(x: 0, y: 0),
-                    items: []
+                    items: [
+                        .init(id: UUID(), name: "Cutlery", tags: ["metal"]),
+                        .init(id: UUID(), name: "Iron Pots", tags: ["metal", "heavy", "healthy", "set", "expensive"]),
+                        .init(id: UUID(), name: "Pans", tags: ["metal"]),
+                        .init(id: UUID(), name: "Glasses", tags: ["fragile"]),
+                    ]
                 ),
                 .init(
                     id: UUID(),
