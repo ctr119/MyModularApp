@@ -2,6 +2,8 @@ import StorageDomain
 import SwiftUI
 
 struct ModulesCarouselView: View {
+    @State private var targetModuleOpacity: CGFloat = 0.1
+
     let modules: [Module]
     let targetModule: Module?
     let didTapSeeAll: () -> Void
@@ -35,9 +37,28 @@ struct ModulesCarouselView: View {
         /// `scrollTo`, otherwise it jumps to the target unanimated.
         try? await Task.sleep(for: .milliseconds(16))
 
-        withAnimation(.bouncy(duration: 0.55)) {
-            proxy.scrollTo(targetModule.id, anchor: .center)
-        }
+        withAnimation(
+            .bouncy(duration: 0.55),
+            completionCriteria: .removed,
+            {
+                proxy.scrollTo(targetModule.id, anchor: .center)
+            },
+            completion: {
+                withAnimation(
+                    .easeInOut(duration: 0.33)
+                    .delay(0.55),
+                    completionCriteria: .logicallyComplete,
+                    {
+                        targetModuleOpacity = 0.3
+                    },
+                    completion: {
+                        withAnimation(.easeInOut(duration: 0.33)) {
+                            targetModuleOpacity = 0.1
+                        }
+                    }
+                )
+            }
+        )
     }
 
     private var header: some View {
@@ -73,7 +94,7 @@ struct ModulesCarouselView: View {
                 .padding(12)
                 .padding(.horizontal, 6)
                 .background(.black.opacity(
-                    0.1
+                    module == targetModule ? targetModuleOpacity : 0.1
                 ))
                 .clipShape(Capsule())
         }
