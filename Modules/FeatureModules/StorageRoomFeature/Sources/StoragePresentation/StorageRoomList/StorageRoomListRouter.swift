@@ -5,6 +5,7 @@ import StorageDomain
 @Observable
 class StorageRoomListRouter {
     enum Destination: Hashable {
+        case moduleDetails(_ module: Module)
         case modulesList(_ modules: [Module])
         case roomDetails(room: StorageRoom, targetModule: Module?)
     }
@@ -35,6 +36,9 @@ class StorageRoomListRouter {
     @ViewBuilder
     func view(for destination: Destination) -> some View {
         switch destination {
+        case .moduleDetails(let module):
+            ModuleDetailsView(module: module)
+
         case .modulesList(let modules):
             ModulesListView(modules: modules, router: self)
 

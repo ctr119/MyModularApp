@@ -10,7 +10,9 @@ struct ModulesListView: View {
             ModuleCellView(
                 module: module,
                 didTapModule: {
-                    // TODO: Navigate to ModuleDetails
+                    router.navigate(
+                        to: .moduleDetails(module)
+                    )
                 },
                 didTapLocateButton: {
                     router.back(returning: module)

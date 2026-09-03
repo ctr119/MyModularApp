@@ -6,6 +6,7 @@ struct ModulesCarouselView: View {
 
     let modules: [Module]
     let targetModule: Module?
+    let didTapModule: (Module) -> Void
     let didTapSeeAll: () -> Void
 
     var body: some View {
@@ -92,7 +93,7 @@ struct ModulesCarouselView: View {
 
     private func carouselCell(_ module: Module) -> some View {
         Button {
-            // TODO: Navigate to Module details view
+            didTapModule(module)
         } label: {
             Text(module.label)
                 .monospaced()
@@ -111,6 +112,7 @@ struct ModulesCarouselView: View {
     ModulesCarouselView(
         modules: StorageRoom.mock.modules,
         targetModule: nil,
+        didTapModule: { _ in },
         didTapSeeAll: {}
     )
 }
