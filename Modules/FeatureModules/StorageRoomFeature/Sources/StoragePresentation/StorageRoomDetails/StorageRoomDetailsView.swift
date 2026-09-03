@@ -12,6 +12,7 @@ struct StorageRoomDetailsView: View {
                 StatsView(room: room)
                 ModulesCarouselView(
                     modules: room.modules,
+                    targetModule: targetModule,
                     didTapSeeAll: {
                         router.navigate(to: .modulesList(room.modules))
                     }

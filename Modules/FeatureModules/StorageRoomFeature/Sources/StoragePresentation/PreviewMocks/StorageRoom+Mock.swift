@@ -12,7 +12,7 @@ public extension StorageRoom {
             modules: [
                 .init(
                     id: UUID(),
-                    label: "1",
+                    label: "1. Kitchen",
                     realWidth: .init(amount: 50, unit: .cm),
                     realDepth: .init(amount: 30, unit: .cm),
                     position: .init(x: 0, y: 0),
@@ -20,7 +20,7 @@ public extension StorageRoom {
                 ),
                 .init(
                     id: UUID(),
-                    label: "2",
+                    label: "2. Bathroom",
                     realWidth: .init(amount: 20, unit: .cm),
                     realDepth: .init(amount: 30, unit: .cm),
                     position: .init(x: 0, y: 40),
@@ -28,7 +28,7 @@ public extension StorageRoom {
                 ),
                 .init(
                     id: UUID(),
-                    label: "3",
+                    label: "3. Living Room",
                     realWidth: .init(amount: 20, unit: .cm),
                     realDepth: .init(amount: 30, unit: .cm),
                     position: .init(x: 0, y: 40),
@@ -36,7 +36,7 @@ public extension StorageRoom {
                 ),
                 .init(
                     id: UUID(),
-                    label: "4",
+                    label: "4. Main Bedroom",
                     realWidth: .init(amount: 20, unit: .cm),
                     realDepth: .init(amount: 30, unit: .cm),
                     position: .init(x: 0, y: 40),
@@ -44,7 +44,7 @@ public extension StorageRoom {
                 ),
                 .init(
                     id: UUID(),
-                    label: "5",
+                    label: "5. Office",
                     realWidth: .init(amount: 20, unit: .cm),
                     realDepth: .init(amount: 30, unit: .cm),
                     position: .init(x: 0, y: 40),

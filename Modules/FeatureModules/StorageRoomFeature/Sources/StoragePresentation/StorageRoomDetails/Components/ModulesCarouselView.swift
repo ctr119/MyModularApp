@@ -3,6 +3,7 @@ import SwiftUI
 
 struct ModulesCarouselView: View {
     let modules: [Module]
+    let targetModule: Module?
     let didTapSeeAll: () -> Void
 
     var body: some View {
@@ -10,13 +11,32 @@ struct ModulesCarouselView: View {
             header
                 .padding(.bottom, 6)
 
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 6) {
-                    ForEach(modules, id: \.id) { module in
-                        carouselCell(module)
+            ScrollViewReader { proxy in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 6) {
+                        ForEach(modules, id: \.id) { module in
+                            carouselCell(module)
+                                .id(module.id)
+                        }
                     }
                 }
+                .task {
+                    await revealTargetModule(using: proxy)
+                }
             }
+        }
+    }
+
+    @MainActor
+    private func revealTargetModule(using proxy: ScrollViewProxy) async {
+        guard let targetModule else { return }
+
+        /// The scroll view needs one layout pass before it can resolve
+        /// `scrollTo`, otherwise it jumps to the target unanimated.
+        try? await Task.sleep(for: .milliseconds(16))
+
+        withAnimation(.bouncy(duration: 0.55)) {
+            proxy.scrollTo(targetModule.id, anchor: .center)
         }
     }
 
@@ -46,13 +66,15 @@ struct ModulesCarouselView: View {
 
     private func carouselCell(_ module: Module) -> some View {
         Button {
-
+            // TODO: Navigate to Module details view
         } label: {
             Text(module.label)
                 .monospaced()
                 .padding(12)
                 .padding(.horizontal, 6)
-                .background(.black.opacity(0.1))
+                .background(.black.opacity(
+                    0.1
+                ))
                 .clipShape(Capsule())
         }
         .buttonStyle(.plain)
@@ -62,6 +84,7 @@ struct ModulesCarouselView: View {
 #Preview {
     ModulesCarouselView(
         modules: StorageRoom.mock.modules,
+        targetModule: nil,
         didTapSeeAll: {}
     )
 }
