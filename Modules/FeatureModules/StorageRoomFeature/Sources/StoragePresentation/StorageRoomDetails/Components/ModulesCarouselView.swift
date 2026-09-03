@@ -44,19 +44,23 @@ struct ModulesCarouselView: View {
                 proxy.scrollTo(targetModule.id, anchor: .center)
             },
             completion: {
-                withAnimation(
-                    .easeInOut(duration: 0.33)
-                    .delay(0.55),
-                    completionCriteria: .logicallyComplete,
-                    {
-                        targetModuleOpacity = 0.3
-                    },
-                    completion: {
-                        withAnimation(.easeInOut(duration: 0.33)) {
-                            targetModuleOpacity = 0.1
-                        }
-                    }
-                )
+                blinkTargetModuleAnimation()
+            }
+        )
+    }
+
+    private func blinkTargetModuleAnimation() {
+        withAnimation(
+            .easeInOut(duration: 0.33)
+            .delay(0.55),
+            completionCriteria: .logicallyComplete,
+            {
+                targetModuleOpacity = 0.3
+            },
+            completion: {
+                withAnimation(.easeInOut(duration: 0.33)) {
+                    targetModuleOpacity = 0.1
+                }
             }
         )
     }
