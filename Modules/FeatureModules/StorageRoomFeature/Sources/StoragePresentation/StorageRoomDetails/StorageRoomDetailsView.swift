@@ -10,6 +10,7 @@ struct StorageRoomDetailsView: View {
         ScrollView {
             VStack(spacing: 30) {
                 StatsView(room: room)
+
                 ModulesCarouselView(
                     modules: room.modules,
                     targetModule: targetModule,
@@ -17,9 +18,16 @@ struct StorageRoomDetailsView: View {
                         router.navigate(to: .modulesList(room.modules))
                     }
                 )
+                .contentMargins(
+                    .horizontal,
+                    .init(exactly: 14),
+                    for: .scrollContent
+                )
+
                 map
+                    .padding(.horizontal)
             }
-            .padding()
+            .padding(.vertical)
         }
         .navigationTitle(room.name)
     }

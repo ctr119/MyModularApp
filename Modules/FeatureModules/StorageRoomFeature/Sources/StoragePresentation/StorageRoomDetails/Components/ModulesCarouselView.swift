@@ -12,6 +12,7 @@ struct ModulesCarouselView: View {
         VStack(alignment: .leading) {
             header
                 .padding(.bottom, 6)
+                .padding(.horizontal)
 
             ScrollViewReader { proxy in
                 ScrollView(.horizontal, showsIndicators: false) {
