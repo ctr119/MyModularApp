@@ -17,8 +17,9 @@ public protocol StorageRoomDataSource: Actor {
 @ModelActor
 actor StorageRoomDataSourceImpl: StorageRoomDataSource {
     func add(item: StoredItemDTO, to module: ModuleDTO) throws {
+        let moduleId = module.id
         var fetchDescriptor = FetchDescriptor<ModuleEntity>(predicate: #Predicate {
-            $0.id == module.id
+            $0.mid == moduleId
         })
         fetchDescriptor.fetchLimit = 1
 
@@ -34,8 +35,9 @@ actor StorageRoomDataSourceImpl: StorageRoomDataSource {
     }
 
     func add(module: ModuleDTO, to room: StorageRoomDTO) throws {
+        let roomId = room.id
         var fetchDescriptor = FetchDescriptor<StorageRoomEntity>(predicate: #Predicate {
-            $0.id == room.id
+            $0.rid == roomId
         })
         fetchDescriptor.fetchLimit = 1
 
@@ -51,8 +53,9 @@ actor StorageRoomDataSourceImpl: StorageRoomDataSource {
     }
 
     func add(room: StorageRoomDTO) throws {
+        let roomId = room.id
         var fetchDescriptor = FetchDescriptor<StorageRoomEntity>(predicate: #Predicate {
-            $0.id == room.id
+            $0.rid == roomId
         })
         fetchDescriptor.fetchLimit = 1
 
@@ -68,24 +71,27 @@ actor StorageRoomDataSourceImpl: StorageRoomDataSource {
     }
 
     func remove(item: StoredItemDTO) throws {
+        let itemId = item.id
         try modelContext.delete(model: StoredItemEntity.self, where: #Predicate {
-            $0.id == item.id
+            $0.iid == itemId
         })
 
         try saveAfterChanges()
     }
 
     func remove(module: ModuleDTO) throws {
+        let moduleId = module.id
         try modelContext.delete(model: ModuleEntity.self, where: #Predicate {
-            $0.id == module.id
+            $0.mid == moduleId
         })
 
         try saveAfterChanges()
     }
 
     func remove(room: StorageRoomDTO) throws {
+        let roomId = room.id
         try modelContext.delete(model: StorageRoomEntity.self, where: #Predicate {
-            $0.id == room.id
+            $0.rid == roomId
         })
 
         try saveAfterChanges()
