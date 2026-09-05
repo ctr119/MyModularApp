@@ -11,12 +11,7 @@ struct ItemCellView: View {
 
             FlowLayout(spacing: 10) {
                 ForEach(item.tags, id: \.self) {
-                    Text("#\($0)")
-                        .font(.caption.monospaced())
-                        .padding(.vertical, 6)
-                        .padding(.horizontal, 8)
-                        .background(Color.black.opacity(0.1))
-                        .clipShape(Capsule())
+                    ItemTagView(tag: $0)
                 }
             }
         }
