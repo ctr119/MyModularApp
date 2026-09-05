@@ -32,7 +32,7 @@ public struct StorageRoomDTO: Sendable {
 extension StorageRoomEntity {
     var toDto: StorageRoomDTO {
         .init(
-            id: self.id,
+            id: self.rid,
             name: self.name,
             cellSizeAmount: self.cellSizeAmount,
             cellSizeUnit: self.cellSizeUnit,
@@ -46,7 +46,7 @@ extension StorageRoomEntity {
 extension StorageRoomDTO {
     var toEntity: StorageRoomEntity {
         let roomEntity = StorageRoomEntity(
-            id: self.id,
+            rid: self.id,
             name: self.name,
             cellSizeAmount: self.cellSizeAmount,
             cellSizeUnit: self.cellSizeUnit,

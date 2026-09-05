@@ -41,7 +41,7 @@ public struct ModuleDTO: Sendable {
 extension ModuleEntity {
     var toDto: ModuleDTO {
         .init(
-            id: self.id,
+            id: self.mid,
             label: self.label,
             realWidthAmount: self.realWidthAmount,
             realWidthUnit: self.realWidthUnit,
@@ -58,7 +58,7 @@ extension ModuleEntity {
 extension ModuleDTO {
     func toEntity(in room: StorageRoomEntity) -> ModuleEntity {
         let moduleEntity = ModuleEntity(
-            id: self.id,
+            mid: self.id,
             label: self.label,
             realWidthAmount: self.realWidthAmount,
             realWidthUnit: self.realWidthUnit,

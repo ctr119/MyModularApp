@@ -4,7 +4,7 @@ import SwiftData
 extension StorageRoomSchemaV1 {
     @Model
     class StorageRoomEntity {
-        var id: UUID
+        var rid: UUID
         var name: String
         var cellSizeAmount: Decimal
         var cellSizeUnit: Int
@@ -15,7 +15,7 @@ extension StorageRoomSchemaV1 {
         var modules: [ModuleEntity]
 
         init(
-            id: UUID,
+            rid: UUID,
             name: String,
             cellSizeAmount: Decimal,
             cellSizeUnit: Int,
@@ -23,7 +23,7 @@ extension StorageRoomSchemaV1 {
             gridCols: Int,
             modules: [ModuleEntity]
         ) {
-            self.id = id
+            self.rid = rid
             self.name = name
             self.cellSizeAmount = cellSizeAmount
             self.cellSizeUnit = cellSizeUnit

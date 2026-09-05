@@ -22,7 +22,7 @@ public struct StoredItemDTO: Sendable {
 extension StoredItemEntity {
     var toDto: StoredItemDTO {
         .init(
-            id: self.id,
+            id: self.iid,
             name: self.name,
             tags: self.tags,
             module: self.moduleEntity?.toDto
@@ -33,7 +33,7 @@ extension StoredItemEntity {
 extension StoredItemDTO {
     func toEntity(in module: ModuleEntity? = nil) -> StoredItemEntity {
         .init(
-            id: self.id,
+            iid: self.id,
             name: self.name,
             tags: self.tags,
             moduleEntity: module

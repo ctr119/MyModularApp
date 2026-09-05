@@ -4,7 +4,7 @@ import SwiftData
 extension StorageRoomSchemaV1 {
     @Model
     class ModuleEntity {
-        var id: UUID
+        var mid: UUID
         var label: String
         var realWidthAmount: Decimal
         var realWidthUnit: Int
@@ -19,7 +19,7 @@ extension StorageRoomSchemaV1 {
         var storageRoom: StorageRoomEntity?
 
         init(
-            id: UUID,
+            mid: UUID,
             label: String,
             realWidthAmount: Decimal,
             realWidthUnit: Int,
@@ -30,7 +30,7 @@ extension StorageRoomSchemaV1 {
             items: [StoredItemEntity],
             storageRoom: StorageRoomEntity? = nil
         ) {
-            self.id = id
+            self.mid = mid
             self.label = label
             self.realWidthAmount = realWidthAmount
             self.realWidthUnit = realWidthUnit
