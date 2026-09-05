@@ -42,3 +42,23 @@ extension StorageRoomEntity {
         )
     }
 }
+
+extension StorageRoomDTO {
+    var toEntity: StorageRoomEntity {
+        let roomEntity = StorageRoomEntity(
+            id: self.id,
+            name: self.name,
+            cellSizeAmount: self.cellSizeAmount,
+            cellSizeUnit: self.cellSizeUnit,
+            gridRows: self.gridRows,
+            gridCols: self.gridCols,
+            modules: []
+        )
+
+        roomEntity.modules = self.modules.map {
+            $0.toEntity(in: roomEntity)
+        }
+
+        return roomEntity
+    }
+}

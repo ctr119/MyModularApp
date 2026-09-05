@@ -54,3 +54,26 @@ extension ModuleEntity {
         )
     }
 }
+
+extension ModuleDTO {
+    func toEntity(in room: StorageRoomEntity) -> ModuleEntity {
+        let moduleEntity = ModuleEntity(
+            id: self.id,
+            label: self.label,
+            realWidthAmount: self.realWidthAmount,
+            realWidthUnit: self.realWidthUnit,
+            realDepthAmount: self.realDepthAmount,
+            realDepthUnit: self.realDepthUnit,
+            positionX: self.positionX,
+            positionY: self.positionY,
+            items: self.items.map { $0.toEntity() },
+            storageRoom: room
+        )
+
+        moduleEntity.items.forEach { itemEntity in
+            itemEntity.moduleEntity = moduleEntity
+        }
+
+        return moduleEntity
+    }
+}

@@ -29,3 +29,14 @@ extension StoredItemEntity {
         )
     }
 }
+
+extension StoredItemDTO {
+    func toEntity(in module: ModuleEntity? = nil) -> StoredItemEntity {
+        .init(
+            id: self.id,
+            name: self.name,
+            tags: self.tags,
+            moduleEntity: module
+        )
+    }
+}
