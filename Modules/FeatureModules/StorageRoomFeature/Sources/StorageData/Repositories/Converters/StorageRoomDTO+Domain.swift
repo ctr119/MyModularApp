@@ -20,3 +20,17 @@ extension StorageRoomDTO {
         )
     }
 }
+
+extension StorageRoom {
+    var toDto: StorageRoomDTO {
+        .init(
+            id: self.id,
+            name: self.name,
+            cellSizeAmount: self.cellSize.amount,
+            cellSizeUnit: self.cellSize.unit.rawValue,
+            gridRows: self.gridRows,
+            gridCols: self.gridCols,
+            modules: self.modules.map { $0.toDto }
+        )
+    }
+}

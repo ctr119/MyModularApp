@@ -11,3 +11,14 @@ extension StoredItemDTO {
         )
     }
 }
+
+extension StoredItem {
+    var toDto: StoredItemDTO {
+        .init(
+            id: self.id,
+            name: self.name,
+            tags: self.tags,
+            module: nil
+        )
+    }
+}

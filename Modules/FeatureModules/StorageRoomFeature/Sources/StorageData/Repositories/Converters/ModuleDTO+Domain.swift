@@ -23,3 +23,20 @@ extension ModuleDTO {
         )
     }
 }
+
+extension Module {
+    var toDto: ModuleDTO {
+        .init(
+            id: self.id,
+            label: self.label,
+            realWidthAmount: self.realWidth.amount,
+            realWidthUnit: self.realWidth.unit.rawValue,
+            realDepthAmount: self.realDepth.amount,
+            realDepthUnit: self.realDepth.unit.rawValue,
+            positionX: self.position.x,
+            positionY: self.position.y,
+            items: self.items.map { $0.toDto },
+            storageRoom: nil
+        )
+    }
+}
