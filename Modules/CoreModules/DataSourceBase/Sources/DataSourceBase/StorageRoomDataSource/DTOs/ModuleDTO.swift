@@ -39,7 +39,7 @@ public struct ModuleDTO: Sendable {
 }
 
 extension ModuleEntity {
-    var toDto: ModuleDTO {
+    func toDto(hydratingItems: Bool = true) -> ModuleDTO {
         .init(
             id: self.mid,
             label: self.label,
@@ -49,8 +49,8 @@ extension ModuleEntity {
             realDepthUnit: self.realDepthUnit,
             positionX: self.positionX,
             positionY: self.positionY,
-            items: self.items.map { $0.toDto },
-            storageRoom: self.storageRoom?.toDto
+            items: hydratingItems ? self.items.map { $0.toDto } : [],
+            storageRoom: self.storageRoom?.toDto()
         )
     }
 }

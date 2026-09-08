@@ -10,8 +10,8 @@ public protocol StorageRoomDataSource: Actor {
     func remove(module: ModuleDTO) throws
     func remove(room: StorageRoomDTO) throws
 
-    func fetchAllRooms() throws -> [StorageRoomDTO]
-    func search(term: String) throws -> [StoredItemDTO]
+    func fetchRooms(_ limit: Int, hydratingModules: Bool) throws -> [StorageRoomDTO]
+    func fetchItems(using query: String, _ limit: Int) throws -> [StoredItemDTO]
 }
 
 @ModelActor
@@ -29,7 +29,7 @@ actor StorageRoomDataSourceImpl: StorageRoomDataSource {
         }
 
         let newItemEntity = item.toEntity(in: existingModule)
-        existingModule.items.append(newItemEntity)
+        modelContext.insert(newItemEntity)
 
         try saveAfterChanges()
     }
@@ -47,7 +47,7 @@ actor StorageRoomDataSourceImpl: StorageRoomDataSource {
         }
 
         let newModuleEntity = module.toEntity(in: roomEntity)
-        roomEntity.modules.append(newModuleEntity)
+        modelContext.insert(newModuleEntity)
 
         try saveAfterChanges()
     }
@@ -103,26 +103,28 @@ actor StorageRoomDataSourceImpl: StorageRoomDataSource {
         }
     }
 
-    func fetchAllRooms() throws -> [StorageRoomDTO] {
-        let sortedDescriptor = FetchDescriptor<StorageRoomEntity>(
+    func fetchRooms(_ limit: Int, hydratingModules: Bool) throws -> [StorageRoomDTO] {
+        var sortedDescriptor = FetchDescriptor<StorageRoomEntity>(
             sortBy: [SortDescriptor(\.name)]
         )
+        sortedDescriptor.fetchLimit = limit
 
         let rooms = try modelContext.fetch(sortedDescriptor)
 
         return rooms.map {
-            $0.toDto
+            $0.toDto(hydratingModules: hydratingModules)
         }
     }
 
-    func search(term: String) throws -> [StoredItemDTO] {
-        let normalizedTerm = term.trimmingCharacters(in: .whitespacesAndNewlines)
+    func fetchItems(using query: String, _ limit: Int) throws -> [StoredItemDTO] {
+        let normalizedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        let filteredDescriptor = FetchDescriptor<StoredItemEntity>(
+        var filteredDescriptor = FetchDescriptor<StoredItemEntity>(
             predicate: #Predicate {
-                $0.name.contains(normalizedTerm)
+                $0.name.contains(normalizedQuery)
             }
         )
+        filteredDescriptor.fetchLimit = limit
 
         let filteredItems = try modelContext.fetch(filteredDescriptor)
 

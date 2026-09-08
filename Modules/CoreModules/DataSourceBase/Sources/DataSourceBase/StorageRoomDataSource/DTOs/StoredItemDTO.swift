@@ -25,7 +25,7 @@ extension StoredItemEntity {
             id: self.iid,
             name: self.name,
             tags: self.tags,
-            module: self.moduleEntity?.toDto
+            module: self.moduleEntity?.toDto(hydratingItems: false)
         )
     }
 }
