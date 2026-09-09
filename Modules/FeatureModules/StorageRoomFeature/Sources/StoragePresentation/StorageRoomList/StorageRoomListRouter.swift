@@ -3,10 +3,11 @@ import StorageDomain
 
 @MainActor
 @Observable
-class StorageRoomListRouter {
-    enum Destination: Hashable {
+public class StorageRoomListRouter {
+    public enum Destination: Hashable {
         case moduleDetails(_ module: Module)
         case modulesList(_ modules: [Module])
+        case newStoredItem(_ module: Module)
         case roomDetails(room: StorageRoom, targetModule: Module?)
     }
 
@@ -42,10 +43,22 @@ class StorageRoomListRouter {
     func view(for destination: Destination) -> some View {
         switch destination {
         case .moduleDetails(let module):
-            ModuleDetailsView(module: module)
+            ModuleDetailsView(
+                module: module,
+                router: self,
+            )
 
         case .modulesList(let modules):
-            ModulesListView(modules: modules, router: self)
+            ModulesListView(
+                modules: modules,
+                router: self
+            )
+
+        case .newStoredItem(let module):
+            NewStoredItemView(
+                for: module,
+                dependencies: depsContainer.newItemDependencies
+            )
 
         case .roomDetails(let room, let targetModule):
             StorageRoomDetailsView(

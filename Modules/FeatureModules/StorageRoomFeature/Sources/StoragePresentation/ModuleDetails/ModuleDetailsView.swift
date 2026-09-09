@@ -5,9 +5,14 @@ public struct ModuleDetailsView: View {
     @State private var isAddNewItemTapped = false
 
     private let module: Module
+    private var router: StorageRoomListRouter
 
-    public init(module: Module) {
+    public init(
+        module: Module,
+        router: StorageRoomListRouter
+    ) {
         self.module = module
+        self.router = router
     }
 
     public var body: some View {
@@ -29,6 +34,9 @@ public struct ModuleDetailsView: View {
                     Image(systemName: "plus")
                 }
             }
+        }
+        .sheet(isPresented: $isAddNewItemTapped) {
+            router.view(for: .newStoredItem(module))
         }
     }
 
@@ -62,7 +70,8 @@ public struct ModuleDetailsView: View {
 #Preview {
     NavigationStack {
         ModuleDetailsView(
-            module: StorageRoom.mock.modules.first!
+            module: StorageRoom.mock.modules.first!,
+            router: .init(depsContainer: .mock())
         )
     }
 }
