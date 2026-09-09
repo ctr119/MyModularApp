@@ -1,12 +1,22 @@
 import StorageDomain
 import SwiftUI
 
-struct StorageRoomDetailsView: View {
-    let room: StorageRoom
-    let targetModule: Module?
-    let router: StorageRoomListRouter
+public struct StorageRoomDetailsView: View {
+    private let room: StorageRoom
+    private let targetModule: Module?
+    private let router: StorageRoomListRouter
 
-    var body: some View {
+    public init(
+        room: StorageRoom,
+        targetModule: Module?,
+        router: StorageRoomListRouter
+    ) {
+        self.room = room
+        self.targetModule = targetModule
+        self.router = router
+    }
+
+    public var body: some View {
         ScrollView {
             VStack(spacing: 30) {
                 StatsView(room: room)
@@ -59,6 +69,8 @@ struct StorageRoomDetailsView: View {
     StorageRoomDetailsView(
         room: .mock,
         targetModule: nil,
-        router: StorageRoomListRouter()
+        router: StorageRoomListRouter(
+            depsContainer: .mock()
+        )
     )
 }

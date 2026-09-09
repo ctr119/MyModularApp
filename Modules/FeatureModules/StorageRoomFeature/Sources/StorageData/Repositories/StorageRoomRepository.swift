@@ -2,16 +2,16 @@ import DataSourceBase
 import Foundation
 import StorageDomain
 
-final class StorageRoomRepository: Sendable {
+public final class StorageRoomRepository: Sendable {
     private let storageRoomDataSource: StorageRoomDataSource
 
-    init(storageRoomDataSource: StorageRoomDataSource) {
+    public init(storageRoomDataSource: StorageRoomDataSource) {
         self.storageRoomDataSource = storageRoomDataSource
     }
 }
 
 extension StorageRoomRepository: GetStorageRoomsUseCase {
-    func callAsFunction() async -> [StorageRoom] {
+    public func callAsFunction() async -> [StorageRoom] {
         do {
             let rooms = try await storageRoomDataSource.fetchRooms(10, hydratingModules: true)
             return rooms.compactMap { $0.toDomain }
@@ -22,7 +22,7 @@ extension StorageRoomRepository: GetStorageRoomsUseCase {
 }
 
 extension StorageRoomRepository: SaveItemUseCase {
-    func save<T, P>(item: T, in parent: P? = nil) async {
+    public func save<T, P>(item: T, in parent: P? = nil) async {
         do {
             if let storedItem = item as? StoredItem, let module = parent as? Module {
                 try await storageRoomDataSource.add(

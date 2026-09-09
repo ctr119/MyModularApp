@@ -11,6 +11,11 @@ class StorageRoomListRouter {
     }
 
     var path: [Destination] = []
+    private let depsContainer: StorageRoomDependenciesContainer
+
+    public init(depsContainer: StorageRoomDependenciesContainer) {
+        self.depsContainer = depsContainer
+    }
 
     func navigate(to destination: Destination) {
         path.append(destination)

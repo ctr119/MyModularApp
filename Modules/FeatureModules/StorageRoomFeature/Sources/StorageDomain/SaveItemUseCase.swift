@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol SaveItemUseCase {
+public protocol SaveItemUseCase: Sendable {
     func save<T, P>(item: T, in parent: P?) async
 }
 

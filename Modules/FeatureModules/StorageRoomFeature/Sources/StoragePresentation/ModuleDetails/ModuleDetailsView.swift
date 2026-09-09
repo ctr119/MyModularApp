@@ -1,10 +1,16 @@
 import StorageDomain
 import SwiftUI
 
-struct ModuleDetailsView: View {
-    let module: Module
+public struct ModuleDetailsView: View {
+    @State private var isAddNewItemTapped = false
 
-    var body: some View {
+    private let module: Module
+
+    public init(module: Module) {
+        self.module = module
+    }
+
+    public var body: some View {
         VStack(spacing: 10) {
             ModuleStatsView(module: module)
 
@@ -15,6 +21,15 @@ struct ModuleDetailsView: View {
             }
         }
         .navigationTitle(module.label)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    isAddNewItemTapped.toggle()
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+        }
     }
 
     private var itemsList: some View {
@@ -45,7 +60,9 @@ struct ModuleDetailsView: View {
 }
 
 #Preview {
-    ModuleDetailsView(
-        module: StorageRoom.mock.modules.first!
-    )
+    NavigationStack {
+        ModuleDetailsView(
+            module: StorageRoom.mock.modules.first!
+        )
+    }
 }

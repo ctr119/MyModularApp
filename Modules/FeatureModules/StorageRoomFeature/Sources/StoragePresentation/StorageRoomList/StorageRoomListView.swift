@@ -1,17 +1,28 @@
 import StorageDomain
 import SwiftUI
 
-struct StorageRoomListView: View {
+public struct StorageRoomListView: View {
     @State private var viewModel: StorageRoomListViewModel
+    @State private var router: StorageRoomListRouter
 
-    init(dependencies: StorageRoomListDependencies) {
+    public init(
+        dependencies container: StorageRoomDependenciesContainer
+    ) {
         self._viewModel = State(
-            wrappedValue: StorageRoomListViewModel(dependencies: dependencies)
+            wrappedValue: StorageRoomListViewModel(
+                dependencies: container.roomListDependencies
+            )
+        )
+
+        self._router = State(
+            wrappedValue: StorageRoomListRouter(
+                depsContainer: container
+            )
         )
     }
 
-    var body: some View {
-        NavigationStack(path: $viewModel.router.path) {
+    public var body: some View {
+        NavigationStack(path: $router.path) {
             ScrollView(showsIndicators: false) {
                 LazyVGrid(
                     columns: [.init(spacing: 15), .init()],
@@ -20,7 +31,7 @@ struct StorageRoomListView: View {
                         ForEach(viewModel.rooms) { room in
                             StorageRoomListCellView(room: room)
                                 .onTapGesture {
-                                    viewModel.didTapRoom(room)
+                                    router.navigate(to: .roomDetails(room: room, targetModule: nil))
                                 }
                         }
                     }
@@ -28,7 +39,7 @@ struct StorageRoomListView: View {
                 .padding()
             }
             .navigationDestination(for: StorageRoomListRouter.Destination.self, destination: { destination in
-                viewModel.router.view(for: destination)
+                router.view(for: destination)
             })
             .task {
                 await viewModel.loadRooms()
@@ -39,8 +50,6 @@ struct StorageRoomListView: View {
 
 #Preview {
     StorageRoomListView(
-        dependencies: .init(
-            getStorageRoomsUseCase: GetStorageRoomsUseCaseMock()
-        )
+        dependencies: .mock()
     )
 }
