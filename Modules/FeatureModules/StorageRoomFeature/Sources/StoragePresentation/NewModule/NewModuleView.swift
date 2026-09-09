@@ -3,20 +3,15 @@ import SwiftUI
 struct NewModuleView: View {
     @Environment(\.dismiss) var dismiss
 
-    @State private var moduleName: String = ""
+    @State private var viewModel: NewModuleViewModel = .init()
     @State private var itemToAdd: String = ""
-    @State private var newItems: [String] = [
-        "Roomba",
-        "Pots",
-        "Iron Pans"
-    ]
 
     var body: some View {
         NavigationStack {
             List {
                 TextField(
                     "",
-                    text: $moduleName,
+                    text: $viewModel.moduleName,
                     prompt: Text("Label your package...")
                         .monospaced()
                 )
@@ -32,14 +27,14 @@ struct NewModuleView: View {
                         defer {
                             itemToAdd = ""
                         }
-                        // TODO: VM add
-                        newItems.append(itemToAdd)
+                        withAnimation {
+                            viewModel.add(item: itemToAdd)
+                        }
                     }
 
-                    if !newItems.isEmpty {
-                        ForEach(newItems, id: \.self) {
-                            Text($0)
-                                .monospaced()
+                    if !viewModel.newItems.isEmpty {
+                        ForEach(viewModel.newItems, id: \.self) {
+                            itemCell($0)
                         }
                     }
                 } header: {
@@ -53,7 +48,7 @@ struct NewModuleView: View {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         Task { @MainActor in
-                            // TODO: await viewModel.save()
+                            await viewModel.save()
                             dismiss()
                         }
                     } label: {
@@ -70,6 +65,25 @@ struct NewModuleView: View {
                 }
             }
         }
+    }
+
+    private func itemCell(_ item: String) -> some View {
+        HStack {
+            Text(item)
+
+            Spacer()
+
+            Button {
+                withAnimation {
+                    viewModel.remove(item: item)
+                }
+            } label: {
+                Image(systemName: "xmark")
+            }
+            .buttonStyle(.plain)
+        }
+        .monospaced()
+        .transition(.opacity)
     }
 }
 
