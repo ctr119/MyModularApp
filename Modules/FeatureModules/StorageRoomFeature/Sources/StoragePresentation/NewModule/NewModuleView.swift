@@ -33,8 +33,11 @@ struct NewModuleView: View {
                     }
 
                     if !viewModel.newItems.isEmpty {
-                        ForEach(viewModel.newItems, id: \.self) {
-                            itemCell($0)
+                        ForEach($viewModel.newItems) { item in
+                            NewItemCellView(
+                                item: item,
+                                didTapRemove: viewModel.remove
+                            )
                         }
                     }
                 } header: {
@@ -65,25 +68,6 @@ struct NewModuleView: View {
                 }
             }
         }
-    }
-
-    private func itemCell(_ item: String) -> some View {
-        HStack {
-            Text(item)
-
-            Spacer()
-
-            Button {
-                withAnimation {
-                    viewModel.remove(item: item)
-                }
-            } label: {
-                Image(systemName: "xmark")
-            }
-            .buttonStyle(.plain)
-        }
-        .monospaced()
-        .transition(.opacity)
     }
 }
 

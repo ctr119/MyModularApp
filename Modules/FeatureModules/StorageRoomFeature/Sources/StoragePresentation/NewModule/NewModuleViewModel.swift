@@ -4,23 +4,18 @@ import SwiftUI
 @Observable
 class NewModuleViewModel {
     var moduleName: String = ""
-    private(set) var newItems: [String] = [
-        "Pots"
-    ]
+    var newItems: [NewItem] = []
 
     func add(item: String) {
-        guard !newItems.contains(item) else {
+        guard !newItems.contains(where: { $0.id == item }) else {
             return
         }
-        newItems.append(item)
+        newItems.append(NewItem(name: item))
     }
 
     func remove(item: String) {
-        guard newItems.contains(item) else {
-            return
-        }
         newItems.removeAll {
-            $0 == item
+            $0.id == item
         }
     }
 
