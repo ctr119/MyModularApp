@@ -2,7 +2,7 @@ import Foundation
 import Playgrounds
 
 public extension Measure {
-    enum Unit: Int, Sendable {
+    enum Unit: Int, CaseIterable, Sendable {
         case cm = 0
         case dm
         case m
@@ -22,5 +22,17 @@ public extension Measure.Unit {
 
     static func >(_ lhs: Measure.Unit, _ rhs: Measure.Unit) -> Bool {
         lhs.rawValue > rhs.rawValue
+    }
+}
+
+// MARK: - Conformance
+
+extension Measure.Unit: CustomLocalizedStringResourceConvertible {
+    public var localizedStringResource: LocalizedStringResource {
+        switch self {
+        case .cm: "cm"
+        case .dm: "dm"
+        case .m: "m"
+        }
     }
 }

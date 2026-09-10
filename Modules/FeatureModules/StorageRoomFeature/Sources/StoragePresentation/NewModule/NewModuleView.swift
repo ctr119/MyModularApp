@@ -1,3 +1,4 @@
+import StorageDomain
 import SwiftUI
 
 struct NewModuleView: View {
@@ -16,34 +17,9 @@ struct NewModuleView: View {
                         .monospaced()
                 )
 
-                Section {
-                    TextField(
-                        "",
-                        text: $itemToAdd,
-                        prompt: Text("Add an item...")
-                            .monospaced()
-                    )
-                    .onSubmit(of: .text) {
-                        defer {
-                            itemToAdd = ""
-                        }
-                        withAnimation {
-                            viewModel.add(item: itemToAdd)
-                        }
-                    }
+                dimensionsSection
 
-                    if !viewModel.newItems.isEmpty {
-                        ForEach($viewModel.newItems) { item in
-                            NewItemCellView(
-                                item: item,
-                                didTapRemove: viewModel.remove
-                            )
-                        }
-                    }
-                } header: {
-                    Text("Items")
-                        .font(.callout.monospaced())
-                }
+                itemsSection
             }
             .navigationTitle("New module")
             .navigationBarTitleDisplayMode(.inline)
@@ -67,6 +43,75 @@ struct NewModuleView: View {
                     }
                 }
             }
+        }
+    }
+
+    private var dimensionsSection: some View {
+        Section {
+            widthMeasureField
+            depthMeasureField
+        } header: {
+            Text("Dimensions")
+                .font(.callout.monospaced())
+        }
+    }
+
+    private var widthMeasureField: some View {
+        LabeledContent {
+            MeasureInput(
+                measure: $viewModel.widthMeasure.amount,
+                unit: $viewModel.widthMeasure.unit,
+                promptText: "Enter the width..."
+            )
+        } label: {
+            Text("Width")
+                .monospaced()
+                .foregroundStyle(.gray.opacity(0.8))
+        }
+    }
+
+    private var depthMeasureField: some View {
+        LabeledContent {
+            MeasureInput(
+                measure: $viewModel.depthMeasure.amount,
+                unit: $viewModel.depthMeasure.unit,
+                promptText: "Enter the depth..."
+            )
+        } label: {
+            Text("Depth")
+                .monospaced()
+                .foregroundStyle(.gray.opacity(0.8))
+        }
+    }
+
+    private var itemsSection: some View {
+        Section {
+            TextField(
+                "",
+                text: $itemToAdd,
+                prompt: Text("Add an item...")
+                    .monospaced()
+            )
+            .onSubmit(of: .text) {
+                defer {
+                    itemToAdd = ""
+                }
+                withAnimation {
+                    viewModel.add(item: itemToAdd)
+                }
+            }
+
+            if !viewModel.newItems.isEmpty {
+                ForEach($viewModel.newItems) { item in
+                    NewItemCellView(
+                        item: item,
+                        didTapRemove: viewModel.remove
+                    )
+                }
+            }
+        } header: {
+            Text("Items")
+                .font(.callout.monospaced())
         }
     }
 }

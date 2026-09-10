@@ -4,6 +4,8 @@ import SwiftUI
 @Observable
 class NewModuleViewModel {
     var moduleName: String = ""
+    var widthMeasure: MeasureModel = .init()
+    var depthMeasure: MeasureModel = .init()
     var newItems: [NewItem] = []
 
     func add(item: String) {
@@ -20,6 +22,6 @@ class NewModuleViewModel {
     }
 
     func save() async {
-        
+        // TODO: Convert values and persist the new items
     }
 }
