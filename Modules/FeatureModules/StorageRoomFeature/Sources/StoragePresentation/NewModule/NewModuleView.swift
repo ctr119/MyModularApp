@@ -5,10 +5,11 @@ struct NewModuleView: View {
     @Environment(\.dismiss) var dismiss
 
     @State private var viewModel: NewModuleViewModel = .init()
+    @State private var router: NewModuleRouter = .init()
     @State private var itemToAdd: String = ""
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $router.path) {
             List {
                 TextField(
                     "",
@@ -23,15 +24,19 @@ struct NewModuleView: View {
             }
             .navigationTitle("New module")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(for: NewModuleRouter.Destination.self) { destination in
+                router.view(for: destination)
+            }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
-                        Task { @MainActor in
-                            await viewModel.save()
-                            dismiss()
-                        }
+                        router.navigate(
+                            to: .positionStep(
+                                .mock // TODO: Pass the real room!
+                            )
+                        )
                     } label: {
-                        Image(systemName: "checkmark")
+                        Image(systemName: "chevron.right")
                     }
                 }
 
