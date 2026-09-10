@@ -7,6 +7,7 @@ public class StorageRoomListRouter {
     public enum Destination: Hashable {
         case moduleDetails(_ module: Module)
         case modulesList(_ modules: [Module])
+        case newModule(_ room: StorageRoom)
         case newStoredItem(_ module: Module)
         case roomDetails(room: StorageRoom, targetModule: Module?)
     }
@@ -53,6 +54,9 @@ public class StorageRoomListRouter {
                 modules: modules,
                 router: self
             )
+
+        case .newModule(let room):
+            NewModuleView()
 
         case .newStoredItem(let module):
             NewStoredItemView(

@@ -2,6 +2,8 @@ import StorageDomain
 import SwiftUI
 
 public struct StorageRoomDetailsView: View {
+    @State private var isNewModuleViewPresented = false
+
     private let room: StorageRoom
     private let targetModule: Module?
     private let router: StorageRoomListRouter
@@ -43,6 +45,21 @@ public struct StorageRoomDetailsView: View {
             .padding(.vertical)
         }
         .navigationTitle(room.name)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    isNewModuleViewPresented.toggle()
+                } label: {
+                    Image(systemName: "widget.small.badge.plus")
+                }
+            }
+        }
+        .sheet(
+            isPresented: $isNewModuleViewPresented,
+            content: {
+                router.view(for: .newModule(room))
+            }
+        )
     }
 
     private var map: some View {
@@ -66,11 +83,13 @@ public struct StorageRoomDetailsView: View {
 }
 
 #Preview {
-    StorageRoomDetailsView(
-        room: .mock,
-        targetModule: nil,
-        router: StorageRoomListRouter(
-            depsContainer: .mock()
+    NavigationStack {
+        StorageRoomDetailsView(
+            room: .mock,
+            targetModule: nil,
+            router: StorageRoomListRouter(
+                depsContainer: .mock()
+            )
         )
-    )
+    }
 }
