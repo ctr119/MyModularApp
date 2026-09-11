@@ -16,7 +16,7 @@ struct MyModularAppApp: App {
 
     var body: some Scene {
         WindowGroup {
-            HomeViewBuilder.build()
+            ContentView()
                 .task(id: setupTaskId) {
                     // TODO: Move this to AppDelegate / SceneDelegate
                     await NetworkTokenStoreFactory.make()
