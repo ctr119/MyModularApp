@@ -47,8 +47,4 @@ class NewModuleViewModel {
             )
         )
     }
-
-    func save() async {
-        // TODO: Convert values and persist the new items
-    }
 }

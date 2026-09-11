@@ -2,12 +2,22 @@ import SwiftUI
 import StorageDomain
 
 struct ModulePositionView: View {
-    @State private var position: Module.Position = .zero
+    @State private var viewModel: ModulePositionViewModel
+
     @State private var dragTranslation: CGSize = .zero
     @State private var mapSize: CGSize = .zero
 
-    let module: Module
-    let room: StorageRoom
+    init(
+        module: Module,
+        room: StorageRoom
+    ) {
+        _viewModel = State(
+            wrappedValue: ModulePositionViewModel(
+                module: module,
+                room: room
+            )
+        )
+    }
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -32,7 +42,7 @@ struct ModulePositionView: View {
                         .onEnded { _ in
                             let settledOffset = offset
                             dragTranslation = .zero
-                            position = Module.Position(
+                            viewModel.position = Module.Position(
                                 x: settledOffset.width,
                                 y: settledOffset.height
                             )
@@ -52,27 +62,32 @@ struct ModulePositionView: View {
     }
 
     private var cellPointSize: CGFloat {
-        guard room.gridCols > 0 else {
+        guard viewModel.room.gridCols > 0 else {
             return 0
         }
-        return mapSize.width / CGFloat(room.gridCols)
+        return mapSize.width / CGFloat(viewModel.room.gridCols)
     }
 
     private var moduleSize: CGSize {
-        CGSize(
-            width: room.cellUnits(for: module.realWidth) * cellPointSize,
-            height: room.cellUnits(for: module.realDepth) * cellPointSize
+        let widthUnits = viewModel.room
+            .cellUnits(for: viewModel.module.realWidth)
+        let depthUnits = viewModel.room
+            .cellUnits(for: viewModel.module.realDepth)
+
+        return CGSize(
+            width: widthUnits * cellPointSize,
+            height: depthUnits * cellPointSize
         )
     }
 
     private var offset: CGSize {
         CGSize(
             width: clamp(
-                position.x + dragTranslation.width,
+                viewModel.position.x + dragTranslation.width,
                 upperBound: mapSize.width - moduleSize.width
             ),
             height: clamp(
-                position.y + dragTranslation.height,
+                viewModel.position.y + dragTranslation.height,
                 upperBound: mapSize.height - moduleSize.height
             )
         )
@@ -83,8 +98,8 @@ struct ModulePositionView: View {
     }
 
     private var map: some View {
-        StorageMapLayout(room: room) {
-            ForEach(room.modules) { module in
+        StorageMapLayout(room: viewModel.room) {
+            ForEach(viewModel.room.modules) { module in
                 MapModuleView(
                     module: module,
                     isTargeted: false
@@ -93,8 +108,8 @@ struct ModulePositionView: View {
         }
         .background {
             StorageGridBackground(
-                rows: room.gridRows,
-                cols: room.gridCols,
+                rows: viewModel.room.gridRows,
+                cols: viewModel.room.gridCols,
                 backgroundColor: .white,
                 cornerRadius: 8
             )
