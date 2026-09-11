@@ -28,10 +28,15 @@ public enum StorageRoomFactory {
             saveItemUseCase: storageRoomRepository
         )
 
+        let newStorageRoomDependencies = NewStorageRoomDependencies(
+            saveItemUseCase: storageRoomRepository
+        )
+
         let dependenciesContainer = StorageRoomDependenciesContainer(
             roomListDependencies: roomListDependencies,
             newItemDependencies: newStoredItemDependencies,
-            modulePositionDependencies: modulePositionDependencies
+            modulePositionDependencies: modulePositionDependencies,
+            newStorageRoomDependencies: newStorageRoomDependencies
         )
 
         return StorageRoomListView(

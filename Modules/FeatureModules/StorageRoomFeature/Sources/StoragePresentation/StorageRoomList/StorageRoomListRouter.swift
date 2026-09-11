@@ -8,6 +8,7 @@ public class StorageRoomListRouter {
         case moduleDetails(_ module: Module)
         case modulesList(_ modules: [Module])
         case newModule(_ room: StorageRoom)
+        case newStorageRoom
         case newStoredItem(_ module: Module)
         case roomDetails(room: StorageRoom, targetModule: Module?)
     }
@@ -59,6 +60,11 @@ public class StorageRoomListRouter {
             NewModuleView(
                 room: room,
                 dependencies: depsContainer.modulePositionDependencies
+            )
+
+        case .newStorageRoom:
+            NewStorageRoomView(
+                dependencies: depsContainer.newStorageRoomDependencies
             )
 
         case .newStoredItem(let module):

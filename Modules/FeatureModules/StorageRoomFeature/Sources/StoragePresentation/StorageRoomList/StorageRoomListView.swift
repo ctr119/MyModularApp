@@ -4,6 +4,7 @@ import SwiftUI
 public struct StorageRoomListView: View {
     @State private var viewModel: StorageRoomListViewModel
     @State private var router: StorageRoomListRouter
+    @State private var isNewRoomScreenPresented = false
 
     public init(
         dependencies container: StorageRoomDependenciesContainer
@@ -41,6 +42,21 @@ public struct StorageRoomListView: View {
             .navigationDestination(for: StorageRoomListRouter.Destination.self, destination: { destination in
                 router.view(for: destination)
             })
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        isNewRoomScreenPresented.toggle()
+                    } label: {
+                        Image(systemName: "plus.app")
+                    }
+                }
+            }
+            .sheet(
+                isPresented: $isNewRoomScreenPresented,
+                content: {
+                    router.view(for: .newStorageRoom)
+                }
+            )
             .task {
                 await viewModel.loadRooms()
             }
