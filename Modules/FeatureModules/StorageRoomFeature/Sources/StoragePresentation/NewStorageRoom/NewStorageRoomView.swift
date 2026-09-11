@@ -4,18 +4,14 @@ import SwiftUI
 struct NewStorageRoomView: View {
     @Environment(\.dismiss) var dismiss
 
-    @State private var roomName: String = ""
-    @State private var cellSizeAmount: Decimal = 1
-    @State private var cellSizeUnit: Measure.Unit = .m
-    @State private var rows: Int = 1
-    @State private var cols: Int = 1
+    @State private var viewModel: NewStorageRoomViewModel = .init()
 
     var body: some View {
         NavigationStack {
             List {
                 TextField(
                     "",
-                    text: $roomName,
+                    text: $viewModel.roomName,
                     prompt: Text("Name the room...")
                         .monospaced()
                 )
@@ -24,6 +20,7 @@ struct NewStorageRoomView: View {
                     dimensionsSection
                 } header: {
                     Text("Dimensions")
+                        .monospaced()
                 }
             }
             .navigationTitle("Add new room")
@@ -52,8 +49,8 @@ struct NewStorageRoomView: View {
     private var dimensionsSection: some View {
         LabeledContent {
             MeasureInput(
-                measure: $cellSizeAmount,
-                unit: $cellSizeUnit,
+                measure: $viewModel.cellSize.amount,
+                unit: $viewModel.cellSize.unit,
                 promptText: "Enter the size for each cell..."
             )
         } label: {
@@ -65,7 +62,7 @@ struct NewStorageRoomView: View {
         LabeledContent {
             TextField(
                 "",
-                value: $rows,
+                value: $viewModel.rows,
                 format: .number
             )
         } label: {
@@ -78,7 +75,7 @@ struct NewStorageRoomView: View {
         LabeledContent {
             TextField(
                 "",
-                value: $cols,
+                value: $viewModel.cols,
                 format: .number
             )
         } label: {
@@ -87,17 +84,6 @@ struct NewStorageRoomView: View {
                 .foregroundStyle(.gray.opacity(0.8))
         }
         .labeledContentStyle(.vertical)
-    }
-
-    private func save() {
-//        StorageRoom(
-//            id: UUID,
-//            name: String,
-//            cellSize: Measure,
-//            gridRows: Int,
-//            gridCols: Int,
-//            modules: [Module]
-//        )
     }
 }
 
