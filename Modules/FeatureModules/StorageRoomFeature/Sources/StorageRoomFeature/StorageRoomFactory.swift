@@ -7,10 +7,12 @@ import SwiftData
 import SwiftUI
 
 @MainActor
-enum StorageRoomFactory {
-    static func make(
-        container: ModelContainer
+public enum StorageRoomFactory {
+    public static func make(
+        container: ModelContainer?
     ) -> some View {
+        guard let container else { fatalError("No container was found") }
+
         let dataSource = StorageRoomDataSourceFactory.make(container)
         let storageRoomRepository = StorageRoomRepository(storageRoomDataSource: dataSource)
 

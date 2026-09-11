@@ -1,4 +1,5 @@
 import DataSourceBase
+import StorageRoomFeature
 import SearchFeature
 import SearchPresentation
 import SwiftUI
@@ -14,8 +15,13 @@ struct ContentView: View {
                 Text("1")
             }
 
-            Tab("Rooms", systemImage: "square.split.bottomrightquarter") {
-                Text("2")
+            Tab(
+                "Rooms",
+                systemImage: "square.split.bottomrightquarter"
+            ) {
+                StorageRoomFactory.make(
+                    container: storageRoomContainer
+                )
             }
 
             Tab(role: .search) {
@@ -24,9 +30,13 @@ struct ContentView: View {
                     container: storageRoomContainer) { event in
                         appRoutes(event)
                     }
+                    .searchable(
+                        text: $searchText,
+                        prompt: "Search items"
+                    )
             }
         }
-        .searchable(text: $searchText, prompt: "Search items")
+        .tabViewSearchActivation(.searchTabSelection)
     }
 
     @ViewBuilder
