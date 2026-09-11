@@ -73,7 +73,7 @@ struct NewStorageRoomView: View {
         LabeledContent {
             TextField(
                 "",
-                value: $viewModel.rows,
+                value: $viewModel.cols,
                 format: .number
             )
         } label: {
@@ -86,7 +86,7 @@ struct NewStorageRoomView: View {
         LabeledContent {
             TextField(
                 "",
-                value: $viewModel.cols,
+                value: $viewModel.rows,
                 format: .number
             )
         } label: {
