@@ -4,7 +4,15 @@ import SwiftUI
 struct NewStorageRoomView: View {
     @Environment(\.dismiss) var dismiss
 
-    @State private var viewModel: NewStorageRoomViewModel = .init()
+    @State private var viewModel: NewStorageRoomViewModel
+
+    init(dependencies: NewStorageRoomDependencies) {
+        self._viewModel = State(
+            wrappedValue: NewStorageRoomViewModel(
+                dependencies: dependencies
+            )
+        )
+    }
 
     var body: some View {
         NavigationStack {
@@ -88,5 +96,7 @@ struct NewStorageRoomView: View {
 }
 
 #Preview {
-    NewStorageRoomView()
+    NewStorageRoomView(
+        dependencies: .mock()
+    )
 }
