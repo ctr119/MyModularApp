@@ -65,15 +65,11 @@ struct StorageMapLayout: Layout {
                 y: bounds.minY + module.position.y
             )
 
-            let width = resolve(measure: module.realWidth)
-                .toDouble
-
-            let height = resolve(measure: module.realDepth)
-                .toDouble
-
+            let widthUnits = room.cellUnits(for: module.realWidth)
+            let heightUnits = room.cellUnits(for: module.realDepth)
             let size = CGSize(
-                width: width * cellPointSize,
-                height: height * cellPointSize
+                width: widthUnits * cellPointSize,
+                height: heightUnits * cellPointSize
             )
 
             subview.place(
@@ -82,11 +78,5 @@ struct StorageMapLayout: Layout {
                 proposal: ProposedViewSize(size)
             )
         }
-    }
-
-    private func resolve(measure: Measure) -> Decimal {
-        let normalized = measure.convert(to: room.cellSize.unit)
-        let value = normalized.amount / room.cellSize.amount
-        return value
     }
 }
