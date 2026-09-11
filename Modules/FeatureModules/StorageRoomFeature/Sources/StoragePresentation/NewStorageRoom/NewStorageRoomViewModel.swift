@@ -1,6 +1,7 @@
 import StorageDomain
 import SwiftUI
 
+@MainActor
 @Observable
 class NewStorageRoomViewModel {
     var roomName: String = ""
@@ -15,6 +16,15 @@ class NewStorageRoomViewModel {
     }
 
     func save() async {
-        // TODO: Inject UseCase
+        let newRoom = StorageRoom(
+            id: UUID(),
+            name: roomName,
+            cellSize: cellSize.toDomain,
+            gridRows: rows,
+            gridCols: cols,
+            modules: []
+        )
+
+        await saveItemUseCase.save(item: newRoom)
     }
 }

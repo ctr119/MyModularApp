@@ -5,7 +5,8 @@ public protocol SaveItemUseCase: Sendable {
 }
 
 extension SaveItemUseCase {
-    public func save<T, P>(item: T, in parent: P? = nil) async {
-        await save(item: item, in: parent)
+    public func save<T>(item: T) async {
+        let aux: Int? = nil
+        await save(item: item, in: aux)
     }
 }

@@ -36,7 +36,10 @@ struct NewStorageRoomView: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
-
+                        Task { @MainActor in
+                            await viewModel.save()
+                            dismiss()
+                        }
                     } label: {
                         Image(systemName: "checkmark")
                     }
