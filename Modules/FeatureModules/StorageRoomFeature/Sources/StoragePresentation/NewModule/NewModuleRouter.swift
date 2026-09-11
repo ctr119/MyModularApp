@@ -20,13 +20,17 @@ final class NewModuleRouter {
     }
 
     @ViewBuilder
-    func view(for destination: Destination) -> some View {
+    func view(
+        for destination: Destination,
+        completion: @escaping () -> Void
+    ) -> some View {
         switch destination {
         case .positionStep(let module, let room):
             ModulePositionView(
                 module: module,
                 room: room,
-                dependencies: modulePositionDependencies
+                dependencies: modulePositionDependencies,
+                completion: completion
             )
         }
     }

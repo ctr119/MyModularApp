@@ -36,7 +36,12 @@ struct NewModuleView: View {
             .navigationTitle("New module")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: NewModuleRouter.Destination.self) { destination in
-                viewModel.router.view(for: destination)
+                viewModel.router.view(
+                    for: destination,
+                    completion: {
+                        dismiss()
+                    }
+                )
             }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {

@@ -7,10 +7,13 @@ struct ModulePositionView: View {
     @State private var dragTranslation: CGSize = .zero
     @State private var mapSize: CGSize = .zero
 
+    private let completion: () -> Void
+
     init(
         module: Module,
         room: StorageRoom,
-        dependencies: ModulePositionDependencies
+        dependencies: ModulePositionDependencies,
+        completion: @escaping () -> Void
     ) {
         _viewModel = State(
             wrappedValue: ModulePositionViewModel(
@@ -19,6 +22,7 @@ struct ModulePositionView: View {
                 dependencies: dependencies
             )
         )
+        self.completion = completion
     }
 
     var body: some View {
@@ -55,7 +59,10 @@ struct ModulePositionView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {
-
+                    Task { @MainActor in
+                        await viewModel.save()
+                        completion()
+                    }
                 } label: {
                     Image(systemName: "checkmark")
                 }
@@ -123,6 +130,7 @@ struct ModulePositionView: View {
     ModulePositionView(
         module: StorageRoom.mock.modules.first!,
         room: .mock,
-        dependencies: .mock()
+        dependencies: .mock(),
+        completion: {}
     )
 }

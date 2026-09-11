@@ -25,6 +25,8 @@ class ModulePositionViewModel {
     }
 
     func save() async {
-        // TODO: Convert values and persist the new items
+        let finalModule = module.copy(position: position)
+
+        await saveItemUseCase.save(item: finalModule, in: room)
     }
 }
