@@ -10,6 +10,13 @@ class NewModuleViewModel {
     var newItems: [NewItem] = []
     var router: NewModuleRouter = .init()
 
+    @ObservationIgnored
+    let room: StorageRoom
+
+    init(room: StorageRoom) {
+        self.room = room
+    }
+
     func add(item: String) {
         guard !newItems.contains(where: { $0.id == item }) else {
             return
@@ -24,8 +31,6 @@ class NewModuleViewModel {
     }
 
     func nextSetp() {
-        let room = StorageRoom.mock // TODO: Use the real one
-
         let newModule = Module(
             id: UUID(),
             label: moduleName,

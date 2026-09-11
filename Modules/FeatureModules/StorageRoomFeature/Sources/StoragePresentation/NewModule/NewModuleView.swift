@@ -4,8 +4,14 @@ import SwiftUI
 struct NewModuleView: View {
     @Environment(\.dismiss) var dismiss
 
-    @State private var viewModel: NewModuleViewModel = .init()
+    @State private var viewModel: NewModuleViewModel
     @State private var itemToAdd: String = ""
+
+    init(room: StorageRoom) {
+        _viewModel = State(
+            wrappedValue: NewModuleViewModel(room: room)
+        )
+    }
 
     var body: some View {
         NavigationStack(path: $viewModel.router.path) {
@@ -117,5 +123,7 @@ struct NewModuleView: View {
 }
 
 #Preview {
-    NewModuleView()
+    NewModuleView(
+        room: .mock
+    )
 }
