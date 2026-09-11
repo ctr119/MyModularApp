@@ -7,9 +7,15 @@ struct NewModuleView: View {
     @State private var viewModel: NewModuleViewModel
     @State private var itemToAdd: String = ""
 
-    init(room: StorageRoom) {
+    init(
+        room: StorageRoom,
+        dependencies: ModulePositionDependencies
+    ) {
         _viewModel = State(
-            wrappedValue: NewModuleViewModel(room: room)
+            wrappedValue: NewModuleViewModel(
+                room: room,
+                dependencies: dependencies
+            )
         )
     }
 
@@ -124,6 +130,7 @@ struct NewModuleView: View {
 
 #Preview {
     NewModuleView(
-        room: .mock
+        room: .mock,
+        dependencies: .mock()
     )
 }

@@ -8,13 +8,19 @@ class NewModuleViewModel {
     var widthMeasure: MeasureModel = .init()
     var depthMeasure: MeasureModel = .init()
     var newItems: [NewItem] = []
-    var router: NewModuleRouter = .init()
+    var router: NewModuleRouter
 
     @ObservationIgnored
     let room: StorageRoom
 
-    init(room: StorageRoom) {
+    init(
+        room: StorageRoom,
+        dependencies: ModulePositionDependencies
+    ) {
         self.room = room
+        self.router = NewModuleRouter(
+            modulePositionDependencies: dependencies
+        )
     }
 
     func add(item: String) {

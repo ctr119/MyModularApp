@@ -11,9 +11,17 @@ class ModulePositionViewModel {
     @ObservationIgnored
     let room: StorageRoom
 
-    init(module: Module, room: StorageRoom) {
+    @ObservationIgnored
+    private let saveItemUseCase: SaveItemUseCase
+
+    init(
+        module: Module,
+        room: StorageRoom,
+        dependencies: ModulePositionDependencies
+    ) {
         self.module = module
         self.room = room
+        self.saveItemUseCase = dependencies.saveItemUseCase
     }
 
     func save() async {

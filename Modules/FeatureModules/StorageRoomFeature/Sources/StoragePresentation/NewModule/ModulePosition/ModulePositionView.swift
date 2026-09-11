@@ -9,12 +9,14 @@ struct ModulePositionView: View {
 
     init(
         module: Module,
-        room: StorageRoom
+        room: StorageRoom,
+        dependencies: ModulePositionDependencies
     ) {
         _viewModel = State(
             wrappedValue: ModulePositionViewModel(
                 module: module,
-                room: room
+                room: room,
+                dependencies: dependencies
             )
         )
     }
@@ -120,6 +122,7 @@ struct ModulePositionView: View {
 #Preview {
     ModulePositionView(
         module: StorageRoom.mock.modules.first!,
-        room: .mock
+        room: .mock,
+        dependencies: .mock()
     )
 }

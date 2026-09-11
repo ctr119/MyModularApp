@@ -9,6 +9,11 @@ final class NewModuleRouter {
     }
 
     var path: [Destination] = []
+    private let modulePositionDependencies: ModulePositionDependencies
+
+    init(modulePositionDependencies: ModulePositionDependencies) {
+        self.modulePositionDependencies = modulePositionDependencies
+    }
 
     func navigate(to destination: Destination) {
         path.append(destination)
@@ -20,7 +25,8 @@ final class NewModuleRouter {
         case .positionStep(let module, let room):
             ModulePositionView(
                 module: module,
-                room: room
+                room: room,
+                dependencies: modulePositionDependencies
             )
         }
     }
