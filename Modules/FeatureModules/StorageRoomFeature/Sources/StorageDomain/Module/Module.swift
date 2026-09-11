@@ -28,3 +28,23 @@ public struct Module: Hashable, Identifiable, CustomStringConvertible, Sendable 
         self.items = items
     }
 }
+
+public extension Module {
+    func copy(
+        id: UUID? = nil,
+        label: String? = nil,
+        realWidth: Measure? = nil,
+        realDepth: Measure? = nil,
+        position: Position? = nil,
+        items: [StoredItem]? = nil
+    ) -> Module {
+        .init(
+            id: id ?? self.id,
+            label: label ?? self.label,
+            realWidth: realWidth ?? self.realWidth,
+            realDepth: realDepth ?? self.realDepth,
+            position: position ?? self.position,
+            items: items ?? self.items
+        )
+    }
+}

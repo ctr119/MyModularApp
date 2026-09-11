@@ -1,10 +1,11 @@
 import SwiftUI
 import StorageDomain
 
+@MainActor
 @Observable
 final class NewModuleRouter {
     enum Destination: Hashable {
-        case positionStep(_ room: StorageRoom)
+        case positionStep(module: Module, room: StorageRoom)
     }
 
     var path: [Destination] = []
@@ -16,9 +17,11 @@ final class NewModuleRouter {
     @ViewBuilder
     func view(for destination: Destination) -> some View {
         switch destination {
-        case .positionStep(let room):
-            // TODO: Build this screen/step
-            Text("The room")
+        case .positionStep(let module, let room):
+            ModulePositionView(
+                module: module,
+                room: room
+            )
         }
     }
 }

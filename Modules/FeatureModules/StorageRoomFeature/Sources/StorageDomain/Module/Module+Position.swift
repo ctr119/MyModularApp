@@ -11,3 +11,9 @@ extension Module {
         }
     }
 }
+
+public extension Module.Position {
+    static var zero: Module.Position {
+        .init(x: 0, y: 0)
+    }
+}
