@@ -56,6 +56,7 @@ struct ModulePositionView: View {
                 )
         }
         .padding()
+        .navigationTitle("Place it inside the room")
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {
