@@ -35,8 +35,7 @@ extension Module {
             realDepthUnit: self.realDepth.unit.rawValue,
             positionX: self.position.x,
             positionY: self.position.y,
-            items: self.items.map { $0.toDto },
-            storageRoom: nil
+            items: self.items.map { $0.toDto }
         )
     }
 }

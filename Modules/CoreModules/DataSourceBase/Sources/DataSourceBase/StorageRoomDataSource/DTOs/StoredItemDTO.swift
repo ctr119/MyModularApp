@@ -4,18 +4,15 @@ public struct StoredItemDTO: Sendable {
     public let id: UUID
     public let name: String
     public let tags: [String]
-    public let module: ModuleDTO?
 
     public init(
         id: UUID,
         name: String,
         tags: [String],
-        module: ModuleDTO?
     ) {
         self.id = id
         self.name = name
         self.tags = tags
-        self.module = module
     }
 }
 
@@ -24,8 +21,7 @@ extension StoredItemEntity {
         .init(
             id: self.iid,
             name: self.name,
-            tags: self.tags,
-            module: self.moduleEntity?.toDto(hydratingItems: false)
+            tags: self.tags
         )
     }
 }

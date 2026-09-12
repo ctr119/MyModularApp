@@ -13,8 +13,31 @@ public final class SearchRepositoryImpl: Sendable {
 extension SearchRepositoryImpl: SearchItemsUseCase {
     public func callAsFunction(_ term: String) async -> [SearchItem] {
         do {
-            let results = try await storageRoomDataSource.fetchItems(using: term, 10)
-            return results.compactMap { $0.toDomain }
+            let rooms = try await storageRoomDataSource.fetchRooms(where: term, limit: 100)
+
+            let matchingSearchItemsPerRoom: [[SearchItem]] = rooms.map { room in
+                room.modules.compactMap { module in
+                    let searchItems = module.items.filter {
+                        $0.name.contains(term)
+                    }.map {
+                        SearchItem(
+                            id: $0.id,
+                            name: $0.name,
+                            module: .init(
+                                id: module.id,
+                                name: module.label
+                            ),
+                            room: .init(
+                                id: room.id,
+                                name: room.name
+                            )
+                        )
+                    }
+                    return searchItems
+                }.flatMap { $0 }
+            }
+
+            return matchingSearchItemsPerRoom.flatMap { $0 }
         } catch {
             return []
         }

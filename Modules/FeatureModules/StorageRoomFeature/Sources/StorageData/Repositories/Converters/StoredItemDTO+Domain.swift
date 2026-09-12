@@ -17,8 +17,7 @@ extension StoredItem {
         .init(
             id: self.id,
             name: self.name,
-            tags: self.tags,
-            module: nil
+            tags: self.tags
         )
     }
 }

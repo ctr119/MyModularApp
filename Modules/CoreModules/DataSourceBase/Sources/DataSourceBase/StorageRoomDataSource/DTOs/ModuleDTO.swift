@@ -11,7 +11,6 @@ public struct ModuleDTO: Sendable {
     public let positionY: Double
 
     public let items: [StoredItemDTO]
-    public let storageRoom: StorageRoomDTO?
 
     public init(
         id: UUID,
@@ -22,8 +21,7 @@ public struct ModuleDTO: Sendable {
         realDepthUnit: Int,
         positionX: Double,
         positionY: Double,
-        items: [StoredItemDTO],
-        storageRoom: StorageRoomDTO?
+        items: [StoredItemDTO]
     ) {
         self.id = id
         self.label = label
@@ -34,7 +32,6 @@ public struct ModuleDTO: Sendable {
         self.positionX = positionX
         self.positionY = positionY
         self.items = items
-        self.storageRoom = storageRoom
     }
 }
 
@@ -49,8 +46,7 @@ extension ModuleEntity {
             realDepthUnit: self.realDepthUnit,
             positionX: self.positionX,
             positionY: self.positionY,
-            items: hydratingItems ? self.items.map { $0.toDto } : [],
-            storageRoom: self.storageRoom?.toDto()
+            items: hydratingItems ? self.items.map { $0.toDto } : []
         )
     }
 }
