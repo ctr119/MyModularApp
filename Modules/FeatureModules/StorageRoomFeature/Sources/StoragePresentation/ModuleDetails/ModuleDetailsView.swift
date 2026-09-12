@@ -3,29 +3,34 @@ import SwiftUI
 
 public struct ModuleDetailsView: View {
     @State private var isAddNewItemTapped = false
-
-    private let module: Module
+    @State private var viewModel: ModuleDetailsViewModel
     private var router: StorageRoomListRouter
 
     public init(
         module: Module,
-        router: StorageRoomListRouter
+        router: StorageRoomListRouter,
+        dependencies: ModuleDetailsDependencies
     ) {
-        self.module = module
+        self._viewModel = State(
+            wrappedValue: ModuleDetailsViewModel(
+                module: module,
+                dependencies: dependencies
+            )
+        )
         self.router = router
     }
 
     public var body: some View {
         VStack(spacing: 10) {
-            ModuleStatsView(module: module)
+            ModuleStatsView(module: viewModel.module)
 
-            if module.items.count <= 0 {
+            if viewModel.module.items.count <= 0 {
                 emptyList
             } else {
                 itemsList
             }
         }
-        .navigationTitle(module.label)
+        .navigationTitle(viewModel.module.label)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {
@@ -35,15 +40,22 @@ public struct ModuleDetailsView: View {
                 }
             }
         }
-        .sheet(isPresented: $isAddNewItemTapped) {
-            router.view(for: .newStoredItem(module))
+        .sheet(
+            isPresented: $isAddNewItemTapped,
+            onDismiss: {
+                Task { @MainActor in
+                    await viewModel.refreshDetails()
+                }
+            }
+        ) {
+            router.view(for: .newStoredItem(viewModel.module))
         }
     }
 
     private var itemsList: some View {
         List {
             Section {
-                ForEach(module.items, id: \.id) {
+                ForEach(viewModel.module.items, id: \.id) {
                     ItemCellView(item: $0)
                 }
             } header: {
@@ -71,7 +83,8 @@ public struct ModuleDetailsView: View {
     NavigationStack {
         ModuleDetailsView(
             module: StorageRoom.mock.modules.first!,
-            router: .init(depsContainer: .mock())
+            router: .init(depsContainer: .mock()),
+            dependencies: .mock()
         )
     }
 }

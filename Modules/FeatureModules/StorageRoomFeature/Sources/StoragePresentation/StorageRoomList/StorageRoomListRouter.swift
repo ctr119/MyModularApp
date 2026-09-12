@@ -48,6 +48,7 @@ public class StorageRoomListRouter {
             ModuleDetailsView(
                 module: module,
                 router: self,
+                dependencies: depsContainer.moduleDetailsDependencies
             )
 
         case .modulesList(let modules):

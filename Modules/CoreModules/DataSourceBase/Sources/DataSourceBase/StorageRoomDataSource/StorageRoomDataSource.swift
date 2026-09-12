@@ -13,6 +13,7 @@ public protocol StorageRoomDataSource: Actor {
     func fetchRoomDetails(id: UUID) throws -> StorageRoomDTO?
     func fetchRooms(hydratingItems: Bool, _ limit: Int) throws -> [StorageRoomDTO]
     func fetchRooms(where itemQuery: String, limit: Int) throws -> [StorageRoomDTO]
+    func fetchModuleDetails(id: UUID) throws -> ModuleDTO?
     func fetchItems(using query: String, _ limit: Int) throws -> [StoredItemDTO]
 }
 
@@ -150,6 +151,22 @@ actor StorageRoomDataSourceImpl: StorageRoomDataSource {
         let rooms = try modelContext.fetch(descriptor)
 
         return rooms.map { $0.toDto() }
+    }
+
+    func fetchModuleDetails(id: UUID) throws -> ModuleDTO? {
+        let copyId = id
+        var sortedDescriptor = FetchDescriptor<ModuleEntity>(
+            predicate: #Predicate {
+                $0.mid == copyId
+            }
+        )
+        sortedDescriptor.fetchLimit = 1
+
+        let modules = try modelContext.fetch(sortedDescriptor)
+
+        return modules.map {
+            $0.toDto(hydratingItems: true)
+        }.first
     }
 
     func fetchItems(using query: String, _ limit: Int) throws -> [StoredItemDTO] {

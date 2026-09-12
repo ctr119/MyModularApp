@@ -52,3 +52,9 @@ extension StorageRoomRepository: GetStorageRoomDetailsUseCase {
         try? await storageRoomDataSource.fetchRoomDetails(id: id)?.toDomain
     }
 }
+
+extension StorageRoomRepository: GetModuleDetailsUseCase {
+    public func callAsFunction(id: UUID) async -> Module? {
+        try? await storageRoomDataSource.fetchModuleDetails(id: id)?.toDomain
+    }
+}

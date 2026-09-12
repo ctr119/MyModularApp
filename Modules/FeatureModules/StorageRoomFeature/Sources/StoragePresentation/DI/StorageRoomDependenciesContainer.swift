@@ -8,7 +8,8 @@ public final class StorageRoomDependenciesContainer {
             newItemDependencies: .mock(),
             modulePositionDependencies: .mock(),
             newStorageRoomDependencies: .mock(),
-            storageRoomDetailsDependencies: .mock()
+            storageRoomDetailsDependencies: .mock(),
+            moduleDetailsDependencies: .mock()
         )
     }
 
@@ -17,18 +18,21 @@ public final class StorageRoomDependenciesContainer {
     let modulePositionDependencies: ModulePositionDependencies
     let newStorageRoomDependencies: NewStorageRoomDependencies
     let storageRoomDetailsDependencies: StorageRoomDetailsDependencies
+    let moduleDetailsDependencies: ModuleDetailsDependencies
 
     public init(
         roomListDependencies: StorageRoomListDependencies,
         newItemDependencies: NewStoredItemDependencies,
         modulePositionDependencies: ModulePositionDependencies,
         newStorageRoomDependencies: NewStorageRoomDependencies,
-        storageRoomDetailsDependencies: StorageRoomDetailsDependencies
+        storageRoomDetailsDependencies: StorageRoomDetailsDependencies,
+        moduleDetailsDependencies: ModuleDetailsDependencies
     ) {
         self.roomListDependencies = roomListDependencies
         self.newItemDependencies = newItemDependencies
         self.modulePositionDependencies = modulePositionDependencies
         self.newStorageRoomDependencies = newStorageRoomDependencies
         self.storageRoomDetailsDependencies = storageRoomDetailsDependencies
+        self.moduleDetailsDependencies = moduleDetailsDependencies
     }
 }
