@@ -13,7 +13,9 @@ public final class StorageRoomRepository: Sendable {
 extension StorageRoomRepository: GetStorageRoomsUseCase {
     public func callAsFunction() async -> [StorageRoom] {
         do {
-            let rooms = try await storageRoomDataSource.fetchRooms(10, hydratingModules: true)
+            let rooms = try await storageRoomDataSource.fetchRooms(
+                hydratingItems: false, 10
+            )
             return rooms.compactMap { $0.toDomain }
         } catch {
             return []

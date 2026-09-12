@@ -30,7 +30,10 @@ public struct StorageRoomDTO: Sendable {
 }
 
 extension StorageRoomEntity {
-    func toDto(hydratingModules: Bool = true) -> StorageRoomDTO {
+    func toDto(
+        hydratingModules: Bool = true,
+        hydratingItems: Bool = true
+    ) -> StorageRoomDTO {
         .init(
             id: self.rid,
             name: self.name,
@@ -39,7 +42,7 @@ extension StorageRoomEntity {
             gridRows: self.gridRows,
             gridCols: self.gridCols,
             modules: hydratingModules ? self.modules.map {
-                $0.toDto(hydratingItems: false)
+                $0.toDto(hydratingItems: hydratingItems)
             } : []
         )
     }
