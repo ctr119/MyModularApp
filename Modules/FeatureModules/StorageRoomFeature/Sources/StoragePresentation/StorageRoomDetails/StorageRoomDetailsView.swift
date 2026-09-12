@@ -3,34 +3,41 @@ import SwiftUI
 
 public struct StorageRoomDetailsView: View {
     @State private var isNewModuleViewPresented = false
+    @State private var viewModel: StorageRoomDetailsViewModel
 
-    private let room: StorageRoom
-    private let targetModule: Module?
     private let router: StorageRoomListRouter
 
     public init(
         room: StorageRoom,
         targetModule: Module?,
-        router: StorageRoomListRouter
+        router: StorageRoomListRouter,
+        dependencies: StorageRoomDetailsDependencies
     ) {
-        self.room = room
-        self.targetModule = targetModule
+        self._viewModel = State(
+            wrappedValue: StorageRoomDetailsViewModel(
+                dependencies: dependencies,
+                room: room,
+                targetModule: targetModule
+            )
+        )
         self.router = router
     }
 
     public var body: some View {
         ScrollView {
             VStack(spacing: 30) {
-                StatsView(room: room)
+                StatsView(room: viewModel.room)
 
                 ModulesCarouselView(
-                    modules: room.modules,
-                    targetModule: targetModule,
+                    modules: viewModel.room.modules,
+                    targetModule: viewModel.targetModule,
                     didTapModule: { module in
                         router.navigate(to: .moduleDetails(module))
                     },
                     didTapSeeAll: {
-                        router.navigate(to: .modulesList(room.modules))
+                        router.navigate(
+                            to: .modulesList(viewModel.room.modules)
+                        )
                     }
                 )
                 .contentMargins(
@@ -44,7 +51,7 @@ public struct StorageRoomDetailsView: View {
             }
             .padding(.vertical)
         }
-        .navigationTitle(room.name)
+        .navigationTitle(viewModel.room.name)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {
@@ -56,25 +63,35 @@ public struct StorageRoomDetailsView: View {
         }
         .sheet(
             isPresented: $isNewModuleViewPresented,
+            onDismiss: {
+                Task { @MainActor in
+                    await viewModel.refreshDetails()
+                }
+            },
             content: {
-                router.view(for: .newModule(room))
+                router.view(
+                    for: .newModule(viewModel.room)
+                )
             }
         )
+        .task {
+            await viewModel.refreshDetails()
+        }
     }
 
     private var map: some View {
-        StorageMapLayout(room: room) {
-            ForEach(room.modules) { module in
+        StorageMapLayout(room: viewModel.room) {
+            ForEach(viewModel.room.modules) { module in
                 MapModuleView(
                     module: module,
-                    isTargeted: module == targetModule
+                    isTargeted: module == viewModel.targetModule
                 )
             }
         }
         .background {
             StorageGridBackground(
-                rows: room.gridRows,
-                cols: room.gridCols,
+                rows: viewModel.room.gridRows,
+                cols: viewModel.room.gridCols,
                 backgroundColor: .white,
                 cornerRadius: 8
             )
@@ -89,7 +106,8 @@ public struct StorageRoomDetailsView: View {
             targetModule: nil,
             router: StorageRoomListRouter(
                 depsContainer: .mock()
-            )
+            ),
+            dependencies: .mock()
         )
     }
 }

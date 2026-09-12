@@ -77,7 +77,8 @@ public class StorageRoomListRouter {
             StorageRoomDetailsView(
                 room: room,
                 targetModule: targetModule,
-                router: self
+                router: self,
+                dependencies: depsContainer.storageRoomDetailsDependencies
             )
         }
     }

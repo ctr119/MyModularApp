@@ -46,3 +46,9 @@ extension StorageRoomRepository: SaveItemUseCase {
         }
     }
 }
+
+extension StorageRoomRepository: GetStorageRoomDetailsUseCase {
+    public func callAsFunction(_ id: UUID) async -> StorageRoom? {
+        try? await storageRoomDataSource.fetchRoomDetails(id: id)?.toDomain
+    }
+}

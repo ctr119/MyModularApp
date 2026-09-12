@@ -10,6 +10,7 @@ public protocol StorageRoomDataSource: Actor {
     func remove(module: ModuleDTO) throws
     func remove(room: StorageRoomDTO) throws
 
+    func fetchRoomDetails(id: UUID) throws -> StorageRoomDTO?
     func fetchRooms(hydratingItems: Bool, _ limit: Int) throws -> [StorageRoomDTO]
     func fetchRooms(where itemQuery: String, limit: Int) throws -> [StorageRoomDTO]
     func fetchItems(using query: String, _ limit: Int) throws -> [StoredItemDTO]
@@ -102,6 +103,22 @@ actor StorageRoomDataSourceImpl: StorageRoomDataSource {
         if modelContext.hasChanges {
             try modelContext.save()
         }
+    }
+
+    func fetchRoomDetails(id: UUID) throws -> StorageRoomDTO? {
+        let copyId = id
+        var sortedDescriptor = FetchDescriptor<StorageRoomEntity>(
+            predicate: #Predicate {
+                $0.rid == copyId
+            }
+        )
+        sortedDescriptor.fetchLimit = 1
+
+        let rooms = try modelContext.fetch(sortedDescriptor)
+
+        return rooms.map {
+            $0.toDto(hydratingModules: true, hydratingItems: true)
+        }.first
     }
 
     func fetchRooms(hydratingItems: Bool, _ limit: Int) throws -> [StorageRoomDTO] {
