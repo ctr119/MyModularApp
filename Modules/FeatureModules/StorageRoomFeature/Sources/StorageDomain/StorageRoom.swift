@@ -37,9 +37,3 @@ public struct StorageRoom: Hashable, Identifiable, Sendable {
         self.modules = modules
     }
 }
-
-extension StorageRoom: Equatable {
-    public static func == (lhs: StorageRoom, rhs: StorageRoom) -> Bool {
-        lhs.id == rhs.id
-    }
-}
