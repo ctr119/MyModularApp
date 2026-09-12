@@ -5,18 +5,15 @@ import SwiftUI
 @Observable
 class StorageRoomDetailsViewModel {
     var room: StorageRoom
-    var targetModule: Module?
 
     private let getStorageRoomDetails: GetStorageRoomDetailsUseCase
 
     init(
         dependencies: StorageRoomDetailsDependencies,
-        room: StorageRoom,
-        targetModule: Module?
+        room: StorageRoom
     ) {
-        self.room = room
-        self.targetModule = targetModule
         self.getStorageRoomDetails = dependencies.getStorageRoomDetailsUseCase
+        self.room = room
     }
 
     func refreshDetails() async {

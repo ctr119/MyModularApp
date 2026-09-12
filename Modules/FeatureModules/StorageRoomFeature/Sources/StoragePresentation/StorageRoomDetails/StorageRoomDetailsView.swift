@@ -5,6 +5,7 @@ public struct StorageRoomDetailsView: View {
     @State private var isNewModuleViewPresented = false
     @State private var viewModel: StorageRoomDetailsViewModel
 
+    private let targetModule: Module?
     private let router: StorageRoomListRouter
 
     public init(
@@ -16,10 +17,10 @@ public struct StorageRoomDetailsView: View {
         self._viewModel = State(
             wrappedValue: StorageRoomDetailsViewModel(
                 dependencies: dependencies,
-                room: room,
-                targetModule: targetModule
+                room: room
             )
         )
+        self.targetModule = targetModule
         self.router = router
     }
 
@@ -30,7 +31,7 @@ public struct StorageRoomDetailsView: View {
 
                 ModulesCarouselView(
                     modules: viewModel.room.modules,
-                    targetModule: viewModel.targetModule,
+                    targetModule: targetModule,
                     didTapModule: { module in
                         router.navigate(to: .moduleDetails(module))
                     },
@@ -84,7 +85,7 @@ public struct StorageRoomDetailsView: View {
             ForEach(viewModel.room.modules) { module in
                 MapModuleView(
                     module: module,
-                    isTargeted: module == viewModel.targetModule
+                    isTargeted: module == targetModule
                 )
             }
         }

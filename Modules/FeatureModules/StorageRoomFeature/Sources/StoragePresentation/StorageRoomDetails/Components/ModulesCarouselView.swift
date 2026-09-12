@@ -24,7 +24,7 @@ struct ModulesCarouselView: View {
                         }
                     }
                 }
-                .task {
+                .task(id: targetModule?.id) {
                     await revealTargetModule(using: proxy)
                 }
             }
