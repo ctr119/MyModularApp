@@ -49,7 +49,7 @@ struct NewStorageRoomView: View {
                     Button {
                         dismiss()
                     } label: {
-                        Image(systemName: "trash")
+                        Image(systemName: "xmark")
                     }
                 }
             }

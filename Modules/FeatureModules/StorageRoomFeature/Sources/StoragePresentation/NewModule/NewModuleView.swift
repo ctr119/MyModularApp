@@ -56,7 +56,7 @@ struct NewModuleView: View {
                     Button {
                         dismiss()
                     } label: {
-                        Image(systemName: "trash")
+                        Image(systemName: "xmark")
                     }
                 }
             }
