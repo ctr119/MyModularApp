@@ -40,7 +40,7 @@ public struct SearchView<Content: View>: View {
             .onChange(of: searchText) { _, newValue in
                 searchTask?.cancel()
                 searchTask = Task {
-                    try? await Task.sleep(nanoseconds: 3_000_000)
+                    try? await Task.sleep(nanoseconds: 500_000_000)
                     guard !Task.isCancelled else { return }
                     await viewModel.search(term: newValue)
                 }
