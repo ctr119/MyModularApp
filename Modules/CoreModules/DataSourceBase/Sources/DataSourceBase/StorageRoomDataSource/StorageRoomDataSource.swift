@@ -12,7 +12,7 @@ public protocol StorageRoomDataSource: Actor {
 
     func fetchRoomDetails(id: UUID) throws -> StorageRoomDTO?
     func fetchRooms(hydratingItems: Bool, _ limit: Int) throws -> [StorageRoomDTO]
-    func fetchRooms(where itemQuery: String, limit: Int) throws -> [StorageRoomDTO]
+    func fetchRooms(containing itemQuery: String, limit: Int) throws -> [StorageRoomDTO]
     func fetchModuleDetails(id: UUID) throws -> ModuleDTO?
     func fetchItems(using query: String, _ limit: Int) throws -> [StoredItemDTO]
 }
@@ -135,13 +135,18 @@ actor StorageRoomDataSourceImpl: StorageRoomDataSource {
         }
     }
 
-    func fetchRooms(where itemQuery: String, limit: Int) throws -> [StorageRoomDTO] {
+    func fetchRooms(containing query: String, limit: Int) throws -> [StorageRoomDTO] {
+        let normalizedQuery = query
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+
         var descriptor = FetchDescriptor<StorageRoomEntity>(
             predicate: #Predicate { room in
                 room.modules.contains { module in
                     module.items.contains { item in
-                        item.name.contains(itemQuery)
+                        item.name.localizedStandardContains(normalizedQuery)
                     }
+                } || room.modules.contains { module in
+                    module.label.localizedStandardContains(normalizedQuery)
                 }
             },
             sortBy: [SortDescriptor(\.name)]
