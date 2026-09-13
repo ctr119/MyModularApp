@@ -75,27 +75,48 @@ actor StorageRoomDataSourceImpl: StorageRoomDataSource {
 
     func remove(item: StoredItemDTO) throws {
         let itemId = item.id
-        try modelContext.delete(model: StoredItemEntity.self, where: #Predicate {
+        var fetchDescriptor = FetchDescriptor<StoredItemEntity>(predicate: #Predicate {
             $0.iid == itemId
         })
+        fetchDescriptor.fetchLimit = 1
+
+        guard let itemEntity = try modelContext.fetch(fetchDescriptor).first else {
+            return
+        }
+
+        modelContext.delete(itemEntity)
 
         try saveAfterChanges()
     }
 
     func remove(module: ModuleDTO) throws {
         let moduleId = module.id
-        try modelContext.delete(model: ModuleEntity.self, where: #Predicate {
+        var fetchDescriptor = FetchDescriptor<ModuleEntity>(predicate: #Predicate {
             $0.mid == moduleId
         })
+        fetchDescriptor.fetchLimit = 1
+
+        guard let moduleEntity = try modelContext.fetch(fetchDescriptor).first else {
+            return
+        }
+
+        modelContext.delete(moduleEntity)
 
         try saveAfterChanges()
     }
 
     func remove(room: StorageRoomDTO) throws {
         let roomId = room.id
-        try modelContext.delete(model: StorageRoomEntity.self, where: #Predicate {
+        var fetchDescriptor = FetchDescriptor<StorageRoomEntity>(predicate: #Predicate {
             $0.rid == roomId
         })
+        fetchDescriptor.fetchLimit = 1
+
+        guard let roomEntity = try modelContext.fetch(fetchDescriptor).first else {
+            return
+        }
+
+        modelContext.delete(roomEntity)
 
         try saveAfterChanges()
     }

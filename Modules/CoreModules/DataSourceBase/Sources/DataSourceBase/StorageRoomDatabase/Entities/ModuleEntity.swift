@@ -13,7 +13,7 @@ extension StorageRoomSchemaV1 {
         var positionX: Double
         var positionY: Double
 
-        @Relationship(inverse: \StoredItemEntity.moduleEntity)
+        @Relationship(deleteRule: .cascade, inverse: \StoredItemEntity.moduleEntity)
         var items: [StoredItemEntity]
 
         var storageRoom: StorageRoomEntity?

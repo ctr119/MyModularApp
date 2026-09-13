@@ -11,7 +11,7 @@ extension StorageRoomSchemaV1 {
         var gridRows: Int
         var gridCols: Int
 
-        @Relationship(inverse: \ModuleEntity.storageRoom)
+        @Relationship(deleteRule: .cascade, inverse: \ModuleEntity.storageRoom)
         var modules: [ModuleEntity]
 
         init(
