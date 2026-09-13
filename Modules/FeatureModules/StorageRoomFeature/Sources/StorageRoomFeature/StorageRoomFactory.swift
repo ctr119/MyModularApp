@@ -33,7 +33,8 @@ public enum StorageRoomFactory {
         )
 
         let storageRoomDetailsDependencies = StorageRoomDetailsDependencies(
-            getStorageRoomDetailsUseCase: storageRoomRepository
+            getStorageRoomDetailsUseCase: storageRoomRepository,
+            deleteItemUseCase: storageRoomRepository
         )
 
         let moduleDetailsDependencies = ModuleDetailsDependencies(

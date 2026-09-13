@@ -7,12 +7,14 @@ class StorageRoomDetailsViewModel {
     var room: StorageRoom
 
     private let getStorageRoomDetails: GetStorageRoomDetailsUseCase
+    private let deleteItemUseCase: DeleteItemUseCase
 
     init(
         dependencies: StorageRoomDetailsDependencies,
         room: StorageRoom
     ) {
         self.getStorageRoomDetails = dependencies.getStorageRoomDetailsUseCase
+        self.deleteItemUseCase = dependencies.deleteItemUseCase
         self.room = room
     }
 
@@ -21,5 +23,9 @@ class StorageRoomDetailsViewModel {
             return
         }
         self.room = refreshedRoom
+    }
+
+    func deleteRoom() async {
+        await deleteItemUseCase.delete(item: room)
     }
 }

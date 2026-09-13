@@ -47,6 +47,22 @@ extension StorageRoomRepository: SaveItemUseCase {
     }
 }
 
+extension StorageRoomRepository: DeleteItemUseCase {
+    public func delete<T>(item: T) async {
+        do {
+            if let room = item as? StorageRoom {
+                try await storageRoomDataSource.remove(room: room.toDto)
+            } else if let module = item as? Module {
+                try await storageRoomDataSource.remove(module: module.toDto)
+            } else if let storedItem = item as? StoredItem {
+                try await storageRoomDataSource.remove(item: storedItem.toDto)
+            }
+        } catch {
+            // TODO: Handle errors
+        }
+    }
+}
+
 extension StorageRoomRepository: GetStorageRoomDetailsUseCase {
     public func callAsFunction(_ id: UUID) async -> StorageRoom? {
         try? await storageRoomDataSource.fetchRoomDetails(id: id)?.toDomain
