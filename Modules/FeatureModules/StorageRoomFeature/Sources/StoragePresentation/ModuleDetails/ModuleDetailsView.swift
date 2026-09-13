@@ -3,6 +3,7 @@ import SwiftUI
 
 public struct ModuleDetailsView: View {
     @State private var isAddNewItemTapped = false
+    @State private var isDeleteModuleTapped = false
     @State private var viewModel: ModuleDetailsViewModel
     private var router: StorageRoomListRouter
 
@@ -39,6 +40,14 @@ public struct ModuleDetailsView: View {
                     Image(systemName: "plus")
                 }
             }
+
+            ToolbarItem(placement: .destructiveAction) {
+                Button {
+                    isDeleteModuleTapped.toggle()
+                } label: {
+                    Image(systemName: "trash")
+                }
+            }
         }
         .sheet(
             isPresented: $isAddNewItemTapped,
@@ -50,6 +59,22 @@ public struct ModuleDetailsView: View {
         ) {
             router.view(for: .newStoredItem(viewModel.module))
         }
+        .alert(
+            "Remove module?",
+            isPresented: $isDeleteModuleTapped,
+            actions: {
+                Button(role: .cancel, action: {})
+                Button(role: .destructive, action: {
+                    Task { @MainActor in
+                        await viewModel.deleteModule()
+                        router.back()
+                    }
+                })
+            },
+            message: {
+                Text("This action cannot be undone.")
+            }
+        )
     }
 
     private var itemsList: some View {
