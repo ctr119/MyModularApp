@@ -4,6 +4,7 @@ import SwiftUI
 public struct ModuleDetailsView: View {
     @State private var isAddNewItemTapped = false
     @State private var isDeleteModuleTapped = false
+    @State private var itemToDelete: StoredItem?
     @State private var viewModel: ModuleDetailsViewModel
     private var router: StorageRoomListRouter
 
@@ -29,6 +30,10 @@ public struct ModuleDetailsView: View {
                 emptyList
             } else {
                 itemsList
+                    .animation(
+                        .easeInOut,
+                        value: viewModel.module.items
+                    )
             }
         }
         .navigationTitle(viewModel.module.label)
@@ -75,13 +80,46 @@ public struct ModuleDetailsView: View {
                 Text("This action cannot be undone.")
             }
         )
+        .alert(
+            "Remove item?",
+            isPresented: Binding(
+                get: { itemToDelete != nil },
+                set: { if !$0 { itemToDelete = nil } }
+            ),
+            presenting: itemToDelete,
+            actions: { item in
+                Button(role: .cancel, action: {
+                    itemToDelete = nil
+                })
+                Button(role: .destructive, action: {
+                    Task { @MainActor in
+                        await viewModel.delete(item: item)
+                        itemToDelete = nil
+                    }
+                })
+            },
+            message: { _ in
+                Text("This action cannot be undone.")
+            }
+        )
     }
 
     private var itemsList: some View {
         List {
             Section {
-                ForEach(viewModel.module.items, id: \.id) {
-                    ItemCellView(item: $0)
+                ForEach(viewModel.module.items, id: \.id) { item in
+                    ItemCellView(item: item)
+                        .swipeActions(
+                            edge: .trailing,
+                            allowsFullSwipe: false
+                        ) {
+                            Button {
+                                itemToDelete = item
+                            } label: {
+                                Image(systemName: "trash")
+                            }
+                            .tint(.red)
+                        }
                 }
             } header: {
                 Text("Items")

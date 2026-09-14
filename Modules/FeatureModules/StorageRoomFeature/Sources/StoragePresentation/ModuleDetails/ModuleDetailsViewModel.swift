@@ -25,4 +25,13 @@ class ModuleDetailsViewModel {
     func deleteModule() async {
         await deleteItemUseCase.delete(item: module)
     }
+
+    func delete(item: StoredItem) async {
+        module = module.copy(
+            items: module.items.filter { $0.id != item.id }
+        )
+
+        await deleteItemUseCase.delete(item: item)
+        await refreshDetails()
+    }
 }
