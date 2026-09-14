@@ -72,7 +72,7 @@ public struct ModuleDetailsView: View {
                 Button(role: .destructive, action: {
                     Task { @MainActor in
                         await viewModel.deleteModule()
-                        router.back()
+                        router.back(returning: viewModel.module)
                     }
                 })
             },

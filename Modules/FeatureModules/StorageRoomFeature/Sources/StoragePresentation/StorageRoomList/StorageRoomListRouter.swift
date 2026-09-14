@@ -33,8 +33,16 @@ public class StorageRoomListRouter {
         let destination = path.popLast()
         
         if case let .roomDetails(room, _) = destination,
-            let targetModule = value as? Module {
+           let targetModule = value as? Module {
             navigate(to: .roomDetails(room: room, targetModule: targetModule))
+
+        } else if case let .modulesList(modules) = destination,
+                  let moduleToRemove = value as? Module {
+            navigate(
+                to: .modulesList(
+                    modules.filter { $0.id != moduleToRemove.id }
+                )
+            )
 
         } else if let destination {
             navigate(to: destination)
