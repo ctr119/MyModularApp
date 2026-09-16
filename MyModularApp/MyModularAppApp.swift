@@ -1,5 +1,6 @@
 import AuthFeature
 import DataSourceBase
+import DesignSystem
 import HomeFeature
 import NetworkKit
 import SwiftData
@@ -13,6 +14,10 @@ struct MyModularAppApp: App {
     private var storageRoomModelContainer: ModelContainer = {
         StorageRoomDatabase.getContainer()
     }()
+
+    init() {
+        DesignSystem.initialize()
+    }
 
     var body: some Scene {
         WindowGroup {

@@ -4,6 +4,7 @@ import SearchFeature
 import SearchPresentation
 import SwiftUI
 import SwiftData
+import DesignSystem
 
 struct ContentView: View {
     @Environment(\.storageRoomContainer) var storageRoomContainer
@@ -12,7 +13,8 @@ struct ContentView: View {
     var body: some View {
         TabView {
             Tab("Home", systemImage: "house") {
-                Text("1")
+                Text("Hello World")
+                    .dsTextStyle(.displayLarge)
             }
 
             Tab(
