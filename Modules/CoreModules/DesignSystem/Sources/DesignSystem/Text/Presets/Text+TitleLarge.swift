@@ -4,9 +4,9 @@ public extension DesignSystem.Text {
     static var titleLarge: DesignSystem.Text {
         .init {
             .init(
-                font: .playfairDisplay(.semibold),
+                font: .montserrat(.bold),
                 isUppercase: false,
-                size: 20
+                size: 32
             )
         }
     }

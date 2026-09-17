@@ -5,21 +5,25 @@ public extension DesignSystem {
         public enum Font: Sendable {
             public enum Weight: String, Sendable {
                 case bold = "Bold"
-                case semibold = "SemiBold"
+                case light = "Light"
                 case medium = "Medium"
                 case regular = "Regular"
             }
-            
-            case inter(_ weight: Weight)
-            case playfairDisplay(_ weight: Weight)
+
+            case ibmPlexMono(_ weight: Weight)
+            case ibmPlexSans(_ weight: Weight)
+            case montserrat(_ weight: Weight)
             
             func name(_ overridingWeight: Weight? = nil) -> String {
                 let (fontName, fontWeight) = switch self {
-                case .inter(let weight):
-                    ("Inter18pt", weight)
+                case .ibmPlexMono(let weight):
+                    ("IBMPlexMono", weight)
 
-                case .playfairDisplay(let weight):
-                    ("PlayfairDisplay", weight)
+                case .ibmPlexSans(let weight):
+                    ("IBMPlexSans", weight)
+
+                case .montserrat(let weight):
+                    ("Montserrat", weight)
                 }
                 
                 let weight = if let overridingWeight { overridingWeight } else { fontWeight }

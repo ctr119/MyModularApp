@@ -5,7 +5,8 @@ public extension DesignSystem.Button {
     static var primary: DesignSystem.Button {
         .init {
             .init(
-                textStyle: .bodyLarge,
+                textStyle: .bodyMedium,
+                textWeight: .medium,
                 backgroundColor: .init(
                     enabled: .button(.primary),
                     disabled: .button(.primary)

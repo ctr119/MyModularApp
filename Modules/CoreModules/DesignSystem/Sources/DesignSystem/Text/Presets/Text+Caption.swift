@@ -1,12 +1,12 @@
 import Foundation
 
 public extension DesignSystem.Text {
-    static var displayMedium: DesignSystem.Text {
+    static var caption: DesignSystem.Text {
         .init {
             .init(
-                font: .playfairDisplay(.bold),
+                font: .ibmPlexMono(.medium),
                 isUppercase: false,
-                size: 40
+                size: 11
             )
         }
     }

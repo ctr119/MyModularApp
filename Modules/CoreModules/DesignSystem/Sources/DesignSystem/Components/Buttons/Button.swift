@@ -28,6 +28,7 @@ public extension DesignSystem {
             }
             
             let textStyle: DesignSystem.Text
+            let textWeight: DesignSystem.Text.Font.Weight?
             let backgroundColor: Color
             let foregroundColor: Color
             let cornerRadius: CGFloat
@@ -36,13 +37,15 @@ public extension DesignSystem {
             
             init(
                 textStyle: DesignSystem.Text,
+                textWeight: DesignSystem.Text.Font.Weight? = nil,
                 backgroundColor: Color,
                 foregroundColor: Color,
                 cornerRadius: CGFloat,
                 border: Border? = nil,
-                insets: Insets = .init(horizontal: 30, vertical: 15)
+                insets: Insets = .init(horizontal: 25, vertical: 10)
             ) {
                 self.textStyle = textStyle
+                self.textWeight = textWeight
                 self.backgroundColor = backgroundColor
                 self.foregroundColor = foregroundColor
                 self.cornerRadius = cornerRadius

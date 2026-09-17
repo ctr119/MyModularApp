@@ -4,7 +4,7 @@ public extension DesignSystem.TextField {
     static var display: DesignSystem.TextField {
         .init {
             .init(
-                textStyle: .displayMedium,
+                textStyle: .display,
                 applyColorToDecorations: true
             )
         }

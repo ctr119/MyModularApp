@@ -1,12 +1,12 @@
 import Foundation
 
 public extension DesignSystem.Text {
-    static var headlineLarge: DesignSystem.Text {
+    static var display: DesignSystem.Text {
         .init {
             .init(
-                font: .playfairDisplay(.semibold),
+                font: .montserrat(.bold),
                 isUppercase: false,
-                size: 32
+                size: 48
             )
         }
     }

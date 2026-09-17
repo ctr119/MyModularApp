@@ -17,14 +17,18 @@ public struct DesignSystem {
     private static func registerFonts() {
         let bundle: Bundle = .module
         let fonts: [DesignSystem.Text.Font] = [
-            .inter(.bold),
-            .inter(.semibold),
-            .inter(.medium),
-            .inter(.regular),
-            .playfairDisplay(.bold),
-            .playfairDisplay(.semibold),
-            .playfairDisplay(.medium),
-            .playfairDisplay(.regular),
+            .ibmPlexMono(.bold),
+            .ibmPlexMono(.light),
+            .ibmPlexMono(.medium),
+            .ibmPlexMono(.regular),
+            .ibmPlexSans(.bold),
+            .ibmPlexSans(.light),
+            .ibmPlexSans(.medium),
+            .ibmPlexSans(.regular),
+            .montserrat(.bold),
+            .montserrat(.light),
+            .montserrat(.medium),
+            .montserrat(.regular),
         ]
         
         let fontUrls = fonts.compactMap {
@@ -34,7 +38,6 @@ public struct DesignSystem {
         CTFontManagerRegisterFontURLs(fontUrls as CFArray, .process, true) { errors, done in
             print(">>> Handler for registering fonts. Done? \(done)")
             if let fontErrors = (errors as? [CFError]) {
-                print(">>> Error casting")
                 fontErrors.forEach { err in
                     print(">>> Error: \(err)")
                 }

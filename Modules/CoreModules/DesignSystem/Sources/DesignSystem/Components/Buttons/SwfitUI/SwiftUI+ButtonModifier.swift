@@ -29,12 +29,13 @@ private struct DesignSystemButtonStyle: ButtonStyle {
         let border = buttonConfiguration.border
         let foregroundColor = buttonConfiguration.foregroundColor.forEnabledState(isEnabled)
         let backgroundColor = buttonConfiguration.backgroundColor.forEnabledState(isEnabled)
-        
+
         return configuration.label
             .dsTextStyle(
                 buttonConfiguration.textStyle,
                 color: foregroundColor,
-                opacity: opacity
+                opacity: opacity,
+                weight: buttonConfiguration.textWeight
             )
             .padding(.vertical, buttonConfiguration.insets.vertical)
             .padding(.horizontal, buttonConfiguration.insets.horizontal)

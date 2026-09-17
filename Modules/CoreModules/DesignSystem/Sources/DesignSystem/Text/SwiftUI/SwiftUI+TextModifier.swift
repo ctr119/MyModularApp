@@ -49,30 +49,18 @@ private struct TextModifier: ViewModifier {
     
     return ZStack {
         VStack(alignment: .leading, spacing: 20) {
-            Text("Display L")
-                .dsTextStyle(.displayLarge)
-            
-            Text("Display M")
-                .dsTextStyle(.displayMedium)
-            
-            Text("Headline L")
-                .dsTextStyle(.headlineLarge)
-            
-            Text("Headline M")
-                .dsTextStyle(.headlineMedium)
-            
-            Text("Headline S")
-                .dsTextStyle(.headlineSmall)
+            Text("Display")
+                .dsTextStyle(.display)
             
             Text("Title L")
                 .dsTextStyle(.titleLarge)
             
             Text("Title M")
                 .dsTextStyle(.titleMedium)
-            
-            Text("Title S")
-                .dsTextStyle(.titleSmall)
-            
+
+            Text("SubTitle")
+                .dsTextStyle(.subTitle)
+
             Text("Body L")
                 .dsTextStyle(.bodyLarge)
             
@@ -81,15 +69,12 @@ private struct TextModifier: ViewModifier {
             
             Text("Body S")
                 .dsTextStyle(.bodySmall)
-            
-            Text("Label L")
-                .dsTextStyle(.labelLarge)
-            
-            Text("Label M")
-                .dsTextStyle(.labelMedium)
-            
-            Text("Label S")
-                .dsTextStyle(.labelSmall)
+
+            Text("Caption")
+                .dsTextStyle(.caption)
+
+            Text("Label")
+                .dsTextStyle(.label)
         }
     }
 }
