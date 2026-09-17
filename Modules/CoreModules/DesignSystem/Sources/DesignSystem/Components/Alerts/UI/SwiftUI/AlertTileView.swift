@@ -41,7 +41,7 @@ struct AlertTileView: View {
             color: configuration.foregroundColor
         )
         .padding(20)
-        .color(configuration.backgroundColor)
+        .background(color: configuration.backgroundColor)
         .clipShape(
             RoundedRectangle(cornerRadius: configuration.cornerRadius)
         )

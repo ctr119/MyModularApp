@@ -1,7 +1,9 @@
+import DesignSystem
 import StorageDomain
 import SwiftUI
 
 struct StorageRoomListCellView: View {
+    private let cornerRadius: CGFloat = 15
     private let modulesToDisplayLimit = 3
 
     let room: StorageRoom
@@ -10,7 +12,7 @@ struct StorageRoomListCellView: View {
         VStack(alignment: .leading, spacing: 10) {
             VStack(alignment: .leading, spacing: 2) {
                 Text(room.name)
-                    .font(.headline)
+                    .dsTextStyle(.subTitle, weight: .bold)
 
                 surfaceLabel
             }
@@ -19,16 +21,21 @@ struct StorageRoomListCellView: View {
 
             if room.modules.count > modulesToDisplayLimit {
                 Text("+^[\(room.modules.count - modulesToDisplayLimit) more package](inflect: true)")
-                    .font(.caption2.italic().monospaced())
+                    .dsTextStyle(.caption)
             }
 
             capacityBar
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.yellow)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-        .shadow(color: .gray.opacity(0.5), radius: 2, x: 0, y: 4)
+        .background(color: .surface(.secondary))
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+        .shadow(
+            color: .gray.opacity(0.5),
+            radius: 10,
+            x: 0,
+            y: 0
+        )
     }
 
     private var surfaceLabel: some View {
@@ -36,7 +43,7 @@ struct StorageRoomListCellView: View {
         let areaLabel = area.description + "2"
 
         return Text("Surface: \(areaLabel)")
-            .font(.caption2.monospaced())
+            .dsTextStyle(.caption)
     }
 
     private var modulesSneakPeak: some View {
@@ -45,13 +52,13 @@ struct StorageRoomListCellView: View {
                 modulesCell(module)
             }
         }
-        .font(.callout.monospaced())
+        .dsTextStyle(.label)
     }
 
     private func modulesCell(_ module: Module) -> some View {
         HStack {
             Image(systemName: "shippingbox.fill")
-                .foregroundStyle(.brown)
+                .foreground(color: .icon(.module))
             Text(module.label)
         }
     }
@@ -65,14 +72,16 @@ struct StorageRoomListCellView: View {
         HStack {
             ProgressView(value: value, total: max)
                 .progressViewStyle(.linear)
-                .tint(.pink)
+                .tint(color: .accent(.primary))
 
             Text(perc, format: .percent)
+                .dsTextStyle(.caption)
         }
-        .font(.caption2.monospaced())
     }
 }
 
 #Preview {
-    StorageRoomListCellView(room: .mock)
+    DesignSystem.initialize()
+
+    return StorageRoomListCellView(room: .mock)
 }

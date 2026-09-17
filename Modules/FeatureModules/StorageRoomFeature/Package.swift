@@ -13,7 +13,8 @@ let package = Package(
         .library(name: "StoragePresentation", type: .dynamic, targets: ["StoragePresentation"]),
     ],
     dependencies: [
-        .package(path: "../../CoreModules/DataSourceBase")
+        .package(path: "../../CoreModules/DataSourceBase"),
+        .package(path: "../../CoreModules/DesignSystem"),
     ],
     targets: [
         .target(name: "StorageDomain"),
@@ -22,7 +23,8 @@ let package = Package(
             .product(name: "DataSourceBase", package: "DataSourceBase")
         ]),
         .target(name: "StoragePresentation", dependencies: [
-            "StorageDomain"
+            "StorageDomain",
+            .product(name: "DesignSystem", package: "DesignSystem")
         ]),
         .target(name: "StorageRoomFeature", dependencies: [
             "StorageDomain",
