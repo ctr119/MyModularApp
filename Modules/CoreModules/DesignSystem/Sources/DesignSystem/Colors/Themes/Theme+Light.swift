@@ -42,21 +42,23 @@ extension DesignSystem.Theme {
         lhs.name < rhs.name
     }
 
-    ScrollView {
-        VStack(alignment: .leading, spacing: 20) {
-            ForEach(sortedKeys, id: \.self) { key in
-                HStack {
-                    Text(key.name)
-                    Spacer()
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(
-                            Color(UIColor(hexString: map[key]!.rawValue))
-                        )
-                        .frame(width: 40, height: 40)
+    ThemedPreview(theme: .light) {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                ForEach(sortedKeys, id: \.self) { key in
+                    HStack {
+                        Text(key.name)
+                        Spacer()
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(
+                                Color(UIColor(hexString: map[key]!.rawValue))
+                            )
+                            .frame(width: 40, height: 40)
+                    }
                 }
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
     }
 }

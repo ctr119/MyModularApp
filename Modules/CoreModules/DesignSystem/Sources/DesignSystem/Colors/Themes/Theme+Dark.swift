@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 extension DesignSystem.Theme {
     public static var dark: DesignSystem.Theme {
@@ -7,7 +8,7 @@ extension DesignSystem.Theme {
             .accent(.secondary):    .brown,
 
             .border(.primary):      .gray500,
-            .border(.secondary):    .gray200,
+            .border(.secondary):    .gray900,
 
             .brand(.primary):       .teal,
             .brand(.secondary):     .brown,
@@ -23,14 +24,42 @@ extension DesignSystem.Theme {
             .icon(.module):         .brown,
             .icon(.room):           .teal,
 
-            .surface(.primary):     .gray50,
-            .surface(.secondary):   .gray100,
-            .surface(.warning):     .yellowLight,
-            .surface(.error):       .redLight,
+            .surface(.primary):     .black,
+            .surface(.secondary):   .gray900,
+            .surface(.warning):     .gray900,
+            .surface(.error):       .gray900,
 
-            .text(.primary):        .gray900,
-            .text(.secondary):      .gray500,
+            .text(.primary):        .white,
+            .text(.secondary):      .gray200,
             .text(.tertiary):       .gray50,
         ])
+    }
+}
+
+#Preview {
+    let theme = DesignSystem.Theme.dark
+    let map = theme.semanticMap
+    let sortedKeys = map.keys.sorted { lhs, rhs in
+        lhs.name < rhs.name
+    }
+
+    ThemedPreview(theme: theme) {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                ForEach(sortedKeys, id: \.self) { key in
+                    HStack {
+                        Text(key.name)
+                        Spacer()
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(
+                                Color(UIColor(hexString: map[key]!.rawValue))
+                            )
+                            .frame(width: 40, height: 40)
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+        }
     }
 }
