@@ -14,7 +14,7 @@ struct ContentView: View {
         TabView {
             Tab("Home", systemImage: "house") {
                 Text("Hello World")
-                    .dsTextStyle(.displayLarge)
+                    .dsTextStyle(.display)
             }
 
             Tab(
