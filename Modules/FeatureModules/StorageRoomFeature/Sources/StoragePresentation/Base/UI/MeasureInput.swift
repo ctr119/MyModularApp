@@ -1,3 +1,4 @@
+import DesignSystem
 import StorageDomain
 import SwiftUI
 
@@ -13,8 +14,8 @@ struct MeasureInput: View {
                 value: $measure,
                 format: .number,
                 prompt: Text(promptText)
-                    .monospaced()
             )
+            .dsTextStyle(.callout)
             .layoutPriority(1)
 
             Picker("", selection: $unit) {
@@ -35,9 +36,11 @@ struct MeasureInput: View {
     @Previewable @State
     var unit: Measure.Unit = .cm
 
-    MeasureInput(
-        measure: $measure,
-        unit: $unit,
-        promptText: "Just a prompt"
-    )
+    ThemedPreview(theme: .light) {
+        MeasureInput(
+            measure: $measure,
+            unit: $unit,
+            promptText: "Just a prompt"
+        )
+    }
 }

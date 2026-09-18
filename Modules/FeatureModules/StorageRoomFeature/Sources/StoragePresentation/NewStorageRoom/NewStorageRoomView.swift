@@ -1,3 +1,4 @@
+import DesignSystem
 import StorageDomain
 import SwiftUI
 
@@ -21,14 +22,14 @@ struct NewStorageRoomView: View {
                     "",
                     text: $viewModel.roomName,
                     prompt: Text("Name the room...")
-                        .monospaced()
                 )
+                .dsTextStyle(.bodyLarge)
 
                 Section {
                     dimensionsSection
                 } header: {
                     Text("Dimensions")
-                        .monospaced()
+                        .dsTextStyle(.subTitle)
                 }
             }
             .navigationTitle("Add new room")
@@ -43,6 +44,7 @@ struct NewStorageRoomView: View {
                     } label: {
                         Image(systemName: "checkmark")
                     }
+                    .tint(color: .accent(.secondary))
                 }
 
                 ToolbarItem(placement: .cancellationAction) {
@@ -51,6 +53,7 @@ struct NewStorageRoomView: View {
                     } label: {
                         Image(systemName: "xmark")
                     }
+                    .tint(color: .accent(.secondary))
                 }
             }
         }
@@ -66,8 +69,10 @@ struct NewStorageRoomView: View {
             )
         } label: {
             Text("Specify the unit measure...")
-                .monospaced()
-                .foregroundStyle(.gray.opacity(0.8))
+                .dsTextStyle(
+                    .bodyMedium,
+                    color: .text(.secondary)
+                )
         }
 
         LabeledContent {
@@ -76,10 +81,13 @@ struct NewStorageRoomView: View {
                 value: $viewModel.cols,
                 format: .number
             )
+            .dsTextStyle(.callout)
         } label: {
             Text("How many units wide?")
-                .monospaced()
-                .foregroundStyle(.gray.opacity(0.8))
+                .dsTextStyle(
+                    .bodyMedium,
+                    color: .text(.secondary)
+                )
         }
         .labeledContentStyle(.vertical)
 
@@ -89,17 +97,22 @@ struct NewStorageRoomView: View {
                 value: $viewModel.rows,
                 format: .number
             )
+            .dsTextStyle(.callout)
         } label: {
             Text("How many units long?")
-                .monospaced()
-                .foregroundStyle(.gray.opacity(0.8))
+                .dsTextStyle(
+                    .bodyMedium,
+                    color: .text(.secondary)
+                )
         }
         .labeledContentStyle(.vertical)
     }
 }
 
 #Preview {
-    NewStorageRoomView(
-        dependencies: .mock()
-    )
+    ThemedPreview(theme: .light) {
+        NewStorageRoomView(
+            dependencies: .mock()
+        )
+    }
 }
