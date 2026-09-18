@@ -1,3 +1,4 @@
+import DesignSystem
 import StorageDomain
 import SwiftUI
 
@@ -24,10 +25,12 @@ public struct ModulesListView: View {
 }
 
 #Preview {
-    ModulesListView(
-        modules: StorageRoom.mock.modules,
-        router: StorageRoomListRouter(
-            depsContainer: .mock()
+    ThemedPreview(theme: .light) {
+        ModulesListView(
+            modules: StorageRoom.mock.modules,
+            router: StorageRoomListRouter(
+                depsContainer: .mock()
+            )
         )
-    )
+    }
 }

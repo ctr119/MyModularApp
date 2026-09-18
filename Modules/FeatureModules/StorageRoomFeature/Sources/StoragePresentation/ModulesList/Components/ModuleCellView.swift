@@ -1,3 +1,4 @@
+import DesignSystem
 import StorageDomain
 import SwiftUI
 
@@ -25,6 +26,7 @@ struct ModuleCellView: View {
                     Image(systemName: "chevron.right")
                 }
             }
+            .dsTextStyle(.bodyLarge)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -32,9 +34,11 @@ struct ModuleCellView: View {
 }
 
 #Preview {
-    ModuleCellView(
-        module: StorageRoom.mock.modules[0],
-        didTapModule: {},
-        didTapLocateButton: {}
-    )
+    ThemedPreview(theme: .light) {
+        ModuleCellView(
+            module: StorageRoom.mock.modules[0],
+            didTapModule: {},
+            didTapLocateButton: {}
+        )
+    }
 }
