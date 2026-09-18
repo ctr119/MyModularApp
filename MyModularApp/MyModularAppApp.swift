@@ -28,6 +28,7 @@ struct MyModularAppApp: App {
                         .setRefreshDelegate(refresher)
                 }
                 .environment(\.storageRoomContainer, storageRoomModelContainer)
+                .tint(color: .accent(.primary))
         }
     }
 }

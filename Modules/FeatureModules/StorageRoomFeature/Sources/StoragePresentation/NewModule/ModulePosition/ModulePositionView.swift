@@ -1,5 +1,6 @@
-import SwiftUI
+import DesignSystem
 import StorageDomain
+import SwiftUI
 
 struct ModulePositionView: View {
     @State private var viewModel: ModulePositionViewModel
@@ -120,7 +121,7 @@ struct ModulePositionView: View {
             StorageGridBackground(
                 rows: viewModel.room.gridRows,
                 cols: viewModel.room.gridCols,
-                backgroundColor: .white,
+                backgroundColor: .surface(.secondary),
                 cornerRadius: 8
             )
         }
@@ -128,10 +129,12 @@ struct ModulePositionView: View {
 }
 
 #Preview {
-    ModulePositionView(
-        module: StorageRoom.mock.modules.first!,
-        room: .mock,
-        dependencies: .mock(),
-        completion: {}
-    )
+    ThemedPreview(theme: .light) {
+        ModulePositionView(
+            module: StorageRoom.mock.modules.first!,
+            room: .mock,
+            dependencies: .mock(),
+            completion: {}
+        )
+    }
 }

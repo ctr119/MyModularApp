@@ -1,3 +1,4 @@
+import DesignSystem
 import StorageDomain
 import SwiftUI
 
@@ -49,6 +50,7 @@ public struct StorageRoomListView: View {
                     } label: {
                         Image(systemName: "plus.app")
                     }
+                    .tint(color: .accent(.secondary))
                 }
             }
             .sheet(
@@ -65,7 +67,9 @@ public struct StorageRoomListView: View {
 }
 
 #Preview {
-    StorageRoomListView(
-        dependencies: .mock()
-    )
+    ThemedPreview(theme: .light) {
+        StorageRoomListView(
+            dependencies: .mock()
+        )
+    }
 }

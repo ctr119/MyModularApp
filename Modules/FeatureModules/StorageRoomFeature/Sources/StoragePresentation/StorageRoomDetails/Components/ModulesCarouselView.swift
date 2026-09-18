@@ -1,3 +1,4 @@
+import DesignSystem
 import StorageDomain
 import SwiftUI
 
@@ -88,7 +89,7 @@ struct ModulesCarouselView: View {
             }
             .buttonStyle(.plain)
         }
-        .monospaced()
+        .dsTextStyle(.subTitle)
     }
 
     private func carouselCell(_ module: Module) -> some View {
@@ -96,12 +97,13 @@ struct ModulesCarouselView: View {
             didTapModule(module)
         } label: {
             Text(module.label)
-                .monospaced()
+                .dsTextStyle(.label)
                 .padding(12)
                 .padding(.horizontal, 6)
-                .background(.black.opacity(
-                    module == targetModule ? targetModuleOpacity : 0.1
-                ))
+                .background(
+                    color: .surface(.tertiary),
+                    opacity: module == targetModule ? targetModuleOpacity : 0.1
+                )
                 .clipShape(Capsule())
         }
         .buttonStyle(.plain)
@@ -109,10 +111,12 @@ struct ModulesCarouselView: View {
 }
 
 #Preview {
-    ModulesCarouselView(
-        modules: StorageRoom.mock.modules,
-        targetModule: nil,
-        didTapModule: { _ in },
-        didTapSeeAll: {}
-    )
+    ThemedPreview(theme: .dark) {
+        ModulesCarouselView(
+            modules: StorageRoom.mock.modules,
+            targetModule: nil,
+            didTapModule: { _ in },
+            didTapSeeAll: {}
+        )
+    }
 }

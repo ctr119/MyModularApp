@@ -26,6 +26,7 @@ extension DesignSystem.Theme {
 
             .surface(.primary):     .gray50,
             .surface(.secondary):   .gray100,
+            .surface(.tertiary):    .gray200,
             .surface(.warning):     .yellowLight,
             .surface(.error):       .redLight,
 

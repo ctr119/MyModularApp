@@ -8,6 +8,8 @@ public struct ThemedPreview<Content: View>: View {
         theme: DesignSystem.Theme = .light,
         @ViewBuilder content: () -> Content,
     ) {
+        DesignSystem.initialize()
+
         self.theme = theme
         self.content = content()
     }

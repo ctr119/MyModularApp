@@ -37,6 +37,7 @@ public extension DesignSystem {
         public enum Surface: CaseIterable, Sendable {
             case primary
             case secondary
+            case tertiary
             case warning
             case error
         }

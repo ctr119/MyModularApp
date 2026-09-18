@@ -1,3 +1,4 @@
+import DesignSystem
 import SwiftUI
 import StorageDomain
 
@@ -38,11 +39,13 @@ struct StatsView: View {
             }
 
         }
-        .font(.callout.monospaced())
+        .dsTextStyle(.callout)
         .labelIconToTitleSpacing(4)
     }
 }
 
 #Preview {
-    StatsView(room: .mock)
+    ThemedPreview(theme: .light) {
+        StatsView(room: .mock)
+    }
 }

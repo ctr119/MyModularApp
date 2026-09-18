@@ -1,3 +1,4 @@
+import DesignSystem
 import StorageDomain
 import SwiftUI
 
@@ -54,6 +55,7 @@ public struct StorageRoomDetailsView: View {
             .padding(.vertical)
         }
         .navigationTitle(viewModel.room.name)
+        .background(color: .surface(.primary))
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {
@@ -61,6 +63,7 @@ public struct StorageRoomDetailsView: View {
                 } label: {
                     Image(systemName: "widget.small.badge.plus")
                 }
+                .tint(color: .accent(.secondary))
             }
 
             ToolbarItem(placement: .destructiveAction) {
@@ -69,6 +72,7 @@ public struct StorageRoomDetailsView: View {
                 } label: {
                     Image(systemName: "trash")
                 }
+                .tint(color: .accent(.secondary))
             }
         }
         .sheet(
@@ -118,7 +122,7 @@ public struct StorageRoomDetailsView: View {
             StorageGridBackground(
                 rows: viewModel.room.gridRows,
                 cols: viewModel.room.gridCols,
-                backgroundColor: .white,
+                backgroundColor: .surface(.secondary),
                 cornerRadius: 8
             )
         }
@@ -126,14 +130,16 @@ public struct StorageRoomDetailsView: View {
 }
 
 #Preview {
-    NavigationStack {
-        StorageRoomDetailsView(
-            room: .mock,
-            targetModule: nil,
-            router: StorageRoomListRouter(
-                depsContainer: .mock()
-            ),
-            dependencies: .mock()
-        )
+    @Previewable @State var router = StorageRoomListRouter(depsContainer: .mock())
+
+    ThemedPreview(theme: .dark) {
+        NavigationStack(path: $router.path) {
+            StorageRoomDetailsView(
+                room: .mock,
+                targetModule: nil,
+                router: router,
+                dependencies: .mock()
+            )
+        }
     }
 }

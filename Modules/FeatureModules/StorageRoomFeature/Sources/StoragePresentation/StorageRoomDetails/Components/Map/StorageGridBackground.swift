@@ -1,13 +1,20 @@
+import DesignSystem
 import SwiftUI
 
 struct StorageGridBackground: View {
+    @Environment(\.theme) var theme
+
     let rows: Int
     let cols: Int
-    let backgroundColor: Color
+    let backgroundColor: DesignSystem.Color
     let cornerRadius: CGFloat
 
     var body: some View {
         GeometryReader { proxy in
+            let lineOpacity: CGFloat = theme == .dark ? 0.6 : 0.3
+            let lineColor: SwiftUI.Color = DesignSystem.Color.border(.primary)
+                .color(for: theme)
+
             let cellPointSize = proxy.size.width / CGFloat(cols)
 
             Canvas { context, size in
@@ -21,7 +28,7 @@ struct StorageGridBackground: View {
                             cornerSize: .init(width: cornerRadius, height: cornerRadius)
                         )
                     },
-                    with: .color(.gray),
+                    with: .color(lineColor),
                     lineWidth: 4
                 )
 
@@ -32,7 +39,7 @@ struct StorageGridBackground: View {
                             $0.move(to: .init(x: 0, y: y))
                             $0.addLine(to: .init(x: size.width, y: y))
                         },
-                        with: .color(.black.opacity(0.3))
+                        with: .color(lineColor.opacity(lineOpacity))
                     )
                 }
 
@@ -43,22 +50,24 @@ struct StorageGridBackground: View {
                             $0.move(to: .init(x: x, y: 0))
                             $0.addLine(to: .init(x: x, y: size.height))
                         },
-                        with: .color(.black.opacity(0.3))
+                        with: .color(lineColor.opacity(lineOpacity))
                     )
                 }
             }
-            .background(backgroundColor)
+            .background(color: backgroundColor)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
-            .shadow(color: .gray, radius: 4, x: 0, y: 4)
+            .shadow(color: lineColor, radius: 4, x: 0, y: 4)
         }
     }
 }
 
 #Preview {
-    StorageGridBackground(
-        rows: 7,
-        cols: 4,
-        backgroundColor: .white,
-        cornerRadius: 20
-    )
+    ThemedPreview(theme: .light) {
+        StorageGridBackground(
+            rows: 7,
+            cols: 4,
+            backgroundColor: .surface(.secondary),
+            cornerRadius: 20
+        )
+    }
 }

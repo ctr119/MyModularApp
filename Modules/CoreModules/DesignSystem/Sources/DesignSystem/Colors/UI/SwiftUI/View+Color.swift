@@ -2,8 +2,16 @@ import Foundation
 import SwiftUI
 
 public extension View {
-    func background(color: DesignSystem.Color?) -> some View {
-        modifier(BackgroundColorModifier(color: color))
+    func background(
+        color: DesignSystem.Color?,
+        opacity: CGFloat = 1.0
+    ) -> some View {
+        modifier(
+            BackgroundColorModifier(
+                color: color,
+                opacity: opacity
+            )
+        )
     }
 
     func foreground(color: DesignSystem.Color?) -> some View {
@@ -19,10 +27,16 @@ private struct BackgroundColorModifier: ViewModifier {
     @Environment(\.theme) var theme
     
     let color: DesignSystem.Color?
-    
+    let opacity: CGFloat
+
+    private var resolvedColor: SwiftUI.Color {
+        (color?.color(for: theme) ?? .clear)
+            .opacity(opacity)
+    }
+
     func body(content: Content) -> some View {
         content
-            .background(color?.color(for: theme) ?? .clear)
+            .background(resolvedColor)
     }
 }
 
