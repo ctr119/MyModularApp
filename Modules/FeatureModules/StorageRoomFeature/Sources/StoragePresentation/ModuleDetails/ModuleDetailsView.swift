@@ -1,7 +1,10 @@
+import DesignSystem
 import StorageDomain
 import SwiftUI
 
 public struct ModuleDetailsView: View {
+    @Environment(\.theme) var theme
+
     @State private var isAddNewItemTapped = false
     @State private var isDeleteModuleTapped = false
     @State private var itemToDelete: StoredItem?
@@ -37,6 +40,7 @@ public struct ModuleDetailsView: View {
             }
         }
         .navigationTitle(viewModel.module.label)
+        .background(color: .surface(.primary))
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {
@@ -44,6 +48,7 @@ public struct ModuleDetailsView: View {
                 } label: {
                     Image(systemName: "plus")
                 }
+                .tint(color: .accent(.secondary))
             }
 
             ToolbarItem(placement: .destructiveAction) {
@@ -52,6 +57,7 @@ public struct ModuleDetailsView: View {
                 } label: {
                     Image(systemName: "trash")
                 }
+                .tint(color: .accent(.secondary))
             }
         }
         .sheet(
@@ -105,7 +111,11 @@ public struct ModuleDetailsView: View {
     }
 
     private var itemsList: some View {
-        List {
+//        let listItemBackgroundColor: SwiftUI.Color = DesignSystem.Color
+//            .surface(.secondary)
+//            .color(for: theme)
+
+        return List {
             Section {
                 ForEach(viewModel.module.items, id: \.id) { item in
                     ItemCellView(item: item)
@@ -118,14 +128,15 @@ public struct ModuleDetailsView: View {
                             } label: {
                                 Image(systemName: "trash")
                             }
-                            .tint(.red)
+                            .tint(color: .feedback(.error))
                         }
                 }
             } header: {
                 Text("Items")
-                    .monospaced()
+                    .dsTextStyle(.subTitle)
             }
             .padding(.top, 10)
+//            .listRowBackground(listItemBackgroundColor)
         }
     }
 
@@ -135,19 +146,33 @@ public struct ModuleDetailsView: View {
                 .font(.system(size: 40))
 
             Text("Empty module")
-                .font(.title2.monospaced())
         }
+        .dsTextStyle(.titleLarge, weight: .regular)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(uiColor: .secondarySystemBackground))
     }
 }
 
-#Preview {
-    NavigationStack {
-        ModuleDetailsView(
-            module: StorageRoom.mock.modules.first!,
-            router: .init(depsContainer: .mock()),
-            dependencies: .mock()
-        )
+#Preview("With Things") {
+    ThemedPreview(theme: .dark) {
+        NavigationStack {
+            ModuleDetailsView(
+                module: StorageRoom.mock.modules.first!,
+                router: .init(depsContainer: .mock()),
+                dependencies: .mock()
+            )
+        }
+    }
+}
+
+#Preview("Empty") {
+    ThemedPreview(theme: .light) {
+        NavigationStack {
+            ModuleDetailsView(
+                module: StorageRoom.mock.modules[1],
+                router: .init(depsContainer: .mock()),
+                dependencies: .mock()
+            )
+        }
     }
 }
